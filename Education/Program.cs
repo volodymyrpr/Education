@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Education
 {
@@ -14,10 +16,13 @@ namespace Education
 
         private void DoEverything()
         {
-            string strComposite = "Name={0,-20} Credit Limit={1,15:C}";
+            StringBuilder sb = new StringBuilder("The string is: ");
+            for (int i=0; i<50; i++)
+            {
+                sb.Append(i + ", ");
+            }
 
-            Console.WriteLine(string.Format(strComposite, "Mary", 500));
-            Console.WriteLine(string.Format(strComposite, "Elizabeth", 20000));
+            Console.WriteLine(sb);
         }
     }
 }
