@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace Education
@@ -16,13 +17,12 @@ namespace Education
 
         private void DoEverything()
         {
-            StringBuilder sb = new StringBuilder("The string is: ");
-            for (int i=0; i<50; i++)
-            {
-                sb.Append(i + ", ");
-            }
+            var now = DateTime.Now;
+            now = DateTime.SpecifyKind(now, DateTimeKind.Utc);
+            var nowOffset = new DateTimeOffset(now);
 
-            Console.WriteLine(sb);
+            Console.WriteLine(nowOffset);
+            Console.WriteLine(DateTimeOffset.UtcNow);
         }
     }
 }
