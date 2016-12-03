@@ -49,9 +49,10 @@ namespace Education
             Console.WriteLine(GetIntegralValue(side));
         }
 
-        private int GetIntegralValue(Enum anyEnum)
+        private object GetIntegralValue(Enum anyEnum)
         {
-            return (int)(object)anyEnum;
+            Type type = Enum.GetUnderlyingType(anyEnum.GetType());
+            return Convert.ChangeType(anyEnum, type);
         }
     }
 }
