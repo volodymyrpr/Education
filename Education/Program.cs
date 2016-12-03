@@ -20,6 +20,12 @@ namespace Education
             Console.ReadLine();
         }
 
+        [Flags]
+        enum BorderSide { Left = 1, Right = 2, Top = 4, Bottom = 8 }
+
+        enum Nut { Walnut, Hazelnut, Macadamia }
+        enum Size { Small, Medium, Large }
+
         private void DoEverything()
         {
             Nut nut = Nut.Hazelnut;
@@ -31,9 +37,21 @@ namespace Education
             {
                 Console.WriteLine(enumElement.GetType().Name + " " + enumElement.ToString());
             }
+
+            DoSomethingElse();
         }
 
-        enum Nut { Walnut, Hazelnut, Macadamia }
-        enum Size { Small, Medium, Large }
+        private void DoSomethingElse()
+        {
+            int intSide = (int)BorderSide.Top;
+            BorderSide side = (BorderSide)intSide;
+
+            Console.WriteLine(GetIntegralValue(side));
+        }
+
+        private int GetIntegralValue(Enum anyEnum)
+        {
+            return (int)(object)anyEnum;
+        }
     }
 }
