@@ -22,15 +22,18 @@ namespace Education
 
         private void DoEverything()
         {
-            BigInteger googol1 = BigInteger.Pow(10, 100);
-            BigInteger googol2 = BigInteger.Parse("1".PadRight(101, '0'));
+            Nut nut = Nut.Hazelnut;
+            Size size = Size.Large;
 
-            Console.WriteLine(googol1 == googol2);
-            Console.WriteLine(googol2);
+            List<Enum> enumElements = new List<Enum>() { nut, size };
 
-            double doubleGoogol = (double)googol1;
-            var converterGoogol = (BigInteger)doubleGoogol;
-            Console.WriteLine(converterGoogol);
+            foreach (var enumElement in enumElements)
+            {
+                Console.WriteLine(enumElement.GetType().Name + " " + enumElement.ToString());
+            }
         }
+
+        enum Nut { Walnut, Hazelnut, Macadamia }
+        enum Size { Small, Medium, Large }
     }
 }
