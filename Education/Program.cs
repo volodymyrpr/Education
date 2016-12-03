@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Text;
+using System.Drawing;
+using System.Threading;
+using System.Numerics;
 
 namespace Education
 {
@@ -18,57 +22,15 @@ namespace Education
 
         private void DoEverything()
         {
-            Console.WriteLine(string.Format(new WordyFormatProvider(), "Number {0:G5} is pronounced like {0:W}", -735.1));
-        }
-    }
+            BigInteger googol1 = BigInteger.Pow(10, 100);
+            BigInteger googol2 = BigInteger.Parse("1".PadRight(101, '0'));
 
-    public class WordyFormatProvider : IFormatProvider, ICustomFormatter
-    {
-        private IFormatProvider parent;
+            Console.WriteLine(googol1 == googol2);
+            Console.WriteLine(googol2);
 
-        private string[] digitWords => "zero one two three four five six seven eight nine minus point".Split();
-
-        private string digitList => "0123456789-.";
-
-        public WordyFormatProvider() : this(CultureInfo.CurrentCulture) { }
-
-        public WordyFormatProvider(IFormatProvider parent)
-        {
-            this.parent = parent;
-        }
-
-        public string Format(string format, object arg, IFormatProvider formatProvider)
-        {
-            if (arg == null || format != "W")
-            {
-                return string.Format(parent, "{0:" + format + "}", arg);
-            }
-            string numberString = string.Format(CultureInfo.InvariantCulture, "{0}", arg);
-            StringBuilder result = new StringBuilder();
-
-            for (int i = 0; i < numberString.Length; i++)
-            {
-                var digit = numberString[i];
-                var digitIndex = digitList.IndexOf(digit);
-                var digitWord = digitWords[digitIndex];
-                if (result.Length > 0)
-                {
-                    result.Append(" ");
-                }
-                result.Append(digitWord);
-            }
-
-            return result.ToString();
-        }
-
-        public object GetFormat(Type formatType)
-        {
-            if (formatType == typeof(ICustomFormatter))
-            {
-                return this;
-            }
-
-            return null;
+            double doubleGoogol = (double)googol1;
+            var converterGoogol = (BigInteger)doubleGoogol;
+            Console.WriteLine(converterGoogol);
         }
     }
 }
