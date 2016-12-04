@@ -39,6 +39,24 @@ namespace Education
             }
 
             DoSomethingElse();
+            DoSomethingMore();
+        }
+
+        private void DoSomethingMore()
+        {
+            var enumValue = Enum.ToObject(typeof(BorderSide), 3);
+            Console.WriteLine(enumValue);
+
+            var newEnumValue = (BorderSide)15;
+            Console.WriteLine(newEnumValue);
+
+            BorderSide leftRight = (BorderSide)Enum.Parse(typeof(BorderSide), "Right, Left");
+            Console.WriteLine(leftRight + "\n");
+
+            foreach(Enum enumMember in Enum.GetValues(typeof(BorderSide)))
+            {
+                Console.WriteLine(enumMember.ToString("D"));
+            }
         }
 
         private void DoSomethingElse()
