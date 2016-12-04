@@ -20,57 +20,65 @@ namespace Education
             Console.ReadLine();
         }
 
-        [Flags]
-        enum BorderSide { Left = 1, Right = 2, Top = 4, Bottom = 8 }
-
-        enum Nut { Walnut, Hazelnut, Macadamia }
-        enum Size { Small, Medium, Large }
-
         private void DoEverything()
         {
-            Nut nut = Nut.Hazelnut;
-            Size size = Size.Large;
 
-            List<Enum> enumElements = new List<Enum>() { nut, size };
-
-            foreach (var enumElement in enumElements)
-            {
-                Console.WriteLine(enumElement.GetType().Name + " " + enumElement.ToString());
-            }
-
-            DoSomethingElse();
-            DoSomethingMore();
         }
+    }
 
-        private void DoSomethingMore()
+    class Test<T>
+    {
+        private T value;
+
+        public void SetValue(T value)
         {
-            var enumValue = Enum.ToObject(typeof(BorderSide), 3);
-            Console.WriteLine(enumValue);
-
-            var newEnumValue = (BorderSide)15;
-            Console.WriteLine(newEnumValue);
-
-            BorderSide leftRight = (BorderSide)Enum.Parse(typeof(BorderSide), "Right, Left");
-            Console.WriteLine(leftRight + "\n");
-
-            foreach(Enum enumMember in Enum.GetValues(typeof(BorderSide)))
+            if (!object.Equals(this.value, value))
             {
-                Console.WriteLine(enumMember.ToString("D"));
+                this.value = value;
             }
         }
 
-        private void DoSomethingElse()
+        private void OnValueChanged(T oldValue, T newValue)
         {
-            int intSide = (int)BorderSide.Top;
-            BorderSide side = (BorderSide)intSide;
+            Console.WriteLine(oldValue.ToString() + "->" + newValue.ToString());
+        }
+    }
 
-            Console.WriteLine(GetIntegralValue(side));
+    class Area : IEquatable<Area>
+    {
+        private int width;
+
+        private int height;
+
+        public Area(int dim1, int dim2)
+        {
+            this.height = Math.Max(dim1, dim2);
+            this.width = Math.Min(dim1, dim2);
         }
 
-        private object GetIntegralValue(Enum anyEnum)
+        public bool Equals(Area otherArea)
         {
-            Type type = Enum.GetUnderlyingType(anyEnum.GetType());
-            return Convert.ChangeType(anyEnum, type);
+            return width == otherArea.width && height == otherArea.height;
         }
+
+        public override bool Equals(object other)
+        {
+            if (!(other is Area))
+            {
+                return false;
+            }
+            var otherArea = (Area)other;
+
+            return this.Equals(otherArea);
+        }
+
+        public override int GetHashCode()
+        {
+            return height * 31 + width;
+        }
+
+        public static bool operator == (Area a1, Area a2) => a1.Equals(a2);
+
+        public static bool operator != (Area a1, Area a2) => !a1.Equals(a2);
     }
 }
