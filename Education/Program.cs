@@ -22,63 +22,26 @@ namespace Education
 
         private void DoEverything()
         {
+            TextWriter oldOut = Console.Out;
 
-        }
-    }
-
-    class Test<T>
-    {
-        private T value;
-
-        public void SetValue(T value)
-        {
-            if (!object.Equals(this.value, value))
+            using (TextWriter w = File.CreateText("e:\\output.txt"))
             {
-                this.value = value;
+                Console.SetOut(w);
+
+                Console.WriteLine("test... 30%");
+
+                Thread.Sleep(1500);
+
+                Console.Write("test... 50%");
+
+                Thread.Sleep(1500);
+
+                Console.Write("test... 80%");
             }
+
+            Console.SetOut(oldOut);
+
+            System.Diagnostics.Process.Start("e:\\output.txt");
         }
-
-        private void OnValueChanged(T oldValue, T newValue)
-        {
-            Console.WriteLine(oldValue.ToString() + "->" + newValue.ToString());
-        }
-    }
-
-    class Area : IEquatable<Area>
-    {
-        private int width;
-
-        private int height;
-
-        public Area(int dim1, int dim2)
-        {
-            this.height = Math.Max(dim1, dim2);
-            this.width = Math.Min(dim1, dim2);
-        }
-
-        public bool Equals(Area otherArea)
-        {
-            return width == otherArea.width && height == otherArea.height;
-        }
-
-        public override bool Equals(object other)
-        {
-            if (!(other is Area))
-            {
-                return false;
-            }
-            var otherArea = (Area)other;
-
-            return this.Equals(otherArea);
-        }
-
-        public override int GetHashCode()
-        {
-            return height * 31 + width;
-        }
-
-        public static bool operator == (Area a1, Area a2) => a1.Equals(a2);
-
-        public static bool operator != (Area a1, Area a2) => !a1.Equals(a2);
     }
 }
