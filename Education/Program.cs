@@ -8,6 +8,8 @@ using System.Drawing;
 using System.Threading;
 using System.Numerics;
 using System.Diagnostics;
+using System.Reflection;
+using Education.Classes;
 
 namespace Education
 {
@@ -23,17 +25,13 @@ namespace Education
 
         private void DoEverything()
         {
-            ProcessStartInfo psi = new ProcessStartInfo
+            Zoo zoo = new Zoo();
+            zoo.Animals.Add(new Animal("Kangaroo", 10));
+            zoo.Animals.Add(new Animal("Mr Sea Lion", 20));
+            foreach(var animal in zoo.Animals)
             {
-                FileName = "cmd.exe",
-                Arguments = "/c ipconfig /all",
-                RedirectStandardOutput = true,
-                UseShellExecute = false
-            };
-
-            Process p = Process.Start(psi);
-            string result = p.StandardOutput.ReadToEnd();
-            Console.WriteLine(result);
+                Console.WriteLine(animal.Name);
+            }
         }
     }
 }
