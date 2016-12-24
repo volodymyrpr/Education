@@ -26,53 +26,47 @@ namespace Education
 
         private void DoEverything()
         {
-            Dictionary<Customer, int> customerImportance = new Dictionary<Customer, int>(new CustomerEqualityComparer());
+            SortedDictionary<Wish, int> wishEfforts = new SortedDictionary<Wish, int>(new WishPriorityComparer());
 
-            Customer petro = new Customer("Petro", "Petrenko");
-            Customer petro2 = new Customer("Petro", "Petrenko");
-            Customer ivan = new Customer("Ivan", "Ivanenko");
+            Wish newFlat = new Wish("new flat", 1);
+            Wish newJob = new Wish("new job", 2);
+            Wish girlfriend = new Wish("new pc", 0);
 
-            Console.WriteLine(petro == petro2);
+            wishEfforts[newFlat] = 10;
+            wishEfforts[newJob] = 3;
+            wishEfforts[girlfriend] = 1000;
 
-            customerImportance[petro] = 1;
-            customerImportance[ivan] = 1;
-            customerImportance[petro2] = 2;
-
-            foreach(var customer in customerImportance.Keys)
+            foreach(var wish in wishEfforts.Keys)
             {
-                Console.WriteLine(customer.FirstName + " " + customer.LastName + ": " + customerImportance[customer]);
+                Console.WriteLine(wish.Name + " " + wish.Priority);
             }
         }
     }
 
-    public class Customer
+    public class Wish
     {
-        public string FirstName;
-        public string LastName;
+        public string Name;
+        public int Priority;
 
-        public Customer(string firstName, string lastName)
+        public Wish(string name, int priority)
         {
-            FirstName = firstName;
-            LastName = lastName;
+            Name = name;
+            Priority = priority;
         }
     }
 
-    public class CustomerEqualityComparer : EqualityComparer<Customer>
+    public class WishPriorityComparer : IComparer<Wish>
     {
-        public override bool Equals(Customer x, Customer y)
+        public int Compare(Wish x, Wish y)
         {
-            if (x.FirstName == y.FirstName &&
-                x.LastName == y.LastName)
+            if (x.Priority == y.Priority)
             {
-                return true;
+                return 0;
             }
-
-            return false;
-        }
-
-        public override int GetHashCode(Customer obj)
-        {
-            return (obj.FirstName + ";" + obj.LastName).GetHashCode();
+            else
+            {
+                return x.Priority.CompareTo(y.Priority);
+            }
         }
     }
 }
