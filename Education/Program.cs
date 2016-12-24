@@ -26,47 +26,42 @@ namespace Education
 
         private void DoEverything()
         {
-            SortedDictionary<Wish, int> wishEfforts = new SortedDictionary<Wish, int>(new WishPriorityComparer());
+            SortedDictionary<string, int> personsRating = new SortedDictionary<string, int>(new SurnameComparer(CultureInfo.InvariantCulture));
 
-            Wish newFlat = new Wish("new flat", 1);
-            Wish newJob = new Wish("new job", 2);
-            Wish girlfriend = new Wish("new pc", 0);
+            personsRating["MacPetriv"] = 10;
+            personsRating["MCIvaniv"] = 11;
+            personsRating["MacRomaniv"] = 12;
 
-            wishEfforts[newFlat] = 10;
-            wishEfforts[newJob] = 3;
-            wishEfforts[girlfriend] = 1000;
-
-            foreach(var wish in wishEfforts.Keys)
+            foreach(var person in personsRating.Keys)
             {
-                Console.WriteLine(wish.Name + " " + wish.Priority);
+                Console.WriteLine(person);
             }
         }
     }
 
-    public class Wish
+    class SurnameComparer : Comparer<string>
     {
-        public string Name;
-        public int Priority;
+        StringComparer strCmp;
 
-        public Wish(string name, int priority)
+        public SurnameComparer(CultureInfo ci)
         {
-            Name = name;
-            Priority = priority;
+            strCmp = StringComparer.Create(ci, false);
         }
-    }
 
-    public class WishPriorityComparer : IComparer<Wish>
-    {
-        public int Compare(Wish x, Wish y)
+        public override int Compare(string x, string y)
         {
-            if (x.Priority == y.Priority)
+            return strCmp.Compare(Normalize(x), Normalize(y));
+        }
+
+        private string Normalize(string s)
+        {
+            s = s.Trim();
+            if (s.StartsWith("MC", StringComparison.InvariantCultureIgnoreCase))
             {
-                return 0;
+                s = "MAC" + s.Substring(2);
             }
-            else
-            {
-                return x.Priority.CompareTo(y.Priority);
-            }
+
+            return s;
         }
     }
 }
