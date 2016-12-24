@@ -10,6 +10,7 @@ using System.Numerics;
 using System.Diagnostics;
 using System.Reflection;
 using Education.Classes;
+using System.Collections.ObjectModel;
 
 namespace Education
 {
@@ -25,32 +26,53 @@ namespace Education
 
         private void DoEverything()
         {
-            Zoo zoo = new Zoo("Vinnytsia zoo");
+            Dictionary<Customer, int> customerImportance = new Dictionary<Customer, int>(new CustomerEqualityComparer());
 
-            var kangaroo = new Animal("Kangaroo", 10);
-            var seaLion = new Animal("Mr Sea Lion", 20);
+            Customer petro = new Customer("Petro", "Petrenko");
+            Customer petro2 = new Customer("Petro", "Petrenko");
+            Customer ivan = new Customer("Ivan", "Ivanenko");
 
-            zoo.Animals.Add(kangaroo);
-            zoo.Animals.Add(seaLion);
+            Console.WriteLine(petro == petro2);
 
-            foreach (var animal in zoo.Animals)
+            customerImportance[petro] = 1;
+            customerImportance[ivan] = 1;
+            customerImportance[petro2] = 2;
+
+            foreach(var customer in customerImportance.Keys)
             {
-                Console.WriteLine(animal.Name + " zoo: " + animal.Zoo.ZooName);
+                Console.WriteLine(customer.FirstName + " " + customer.LastName + ": " + customerImportance[customer]);
+            }
+        }
+    }
+
+    public class Customer
+    {
+        public string FirstName;
+        public string LastName;
+
+        public Customer(string firstName, string lastName)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+        }
+    }
+
+    public class CustomerEqualityComparer : EqualityComparer<Customer>
+    {
+        public override bool Equals(Customer x, Customer y)
+        {
+            if (x.FirstName == y.FirstName &&
+                x.LastName == y.LastName)
+            {
+                return true;
             }
 
-            Console.WriteLine(zoo.Animals[0].Popularity);
-            Console.WriteLine(zoo.Animals["Mr Sea Lion"].Popularity);
-            zoo.Animals["Kangaroo"].Name = "Mr Robot";
+            return false;
+        }
 
-            foreach (var animal in zoo.Animals)
-            {
-                Console.WriteLine(animal.Name + " zoo: " + animal.Zoo.ZooName);
-            }
-
-            zoo.Animals.Clear();
-
-            Console.WriteLine(kangaroo.Name + " zoo: " + kangaroo.Zoo?.ZooName);
-            Console.WriteLine(seaLion.Name + " zoo: " + seaLion.Zoo?.ZooName);
+        public override int GetHashCode(Customer obj)
+        {
+            return (obj.FirstName + ";" + obj.LastName).GetHashCode();
         }
     }
 }
