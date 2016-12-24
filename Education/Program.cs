@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.Reflection;
 using Education.Classes;
 using System.Collections.ObjectModel;
+using System.Collections;
 
 namespace Education
 {
@@ -26,42 +27,22 @@ namespace Education
 
         private void DoEverything()
         {
-            SortedDictionary<string, int> personsRating = new SortedDictionary<string, int>(new SurnameComparer(CultureInfo.InvariantCulture));
+            int[] a = new int[] { 1, 2, 3 };
+            int[] b = new int[] { 1, 2, 3 };
 
-            personsRating["MacPetriv"] = 10;
-            personsRating["MCIvaniv"] = 11;
-            personsRating["MacRomaniv"] = 12;
+            IStructuralEquatable a1 = a;
 
-            foreach(var person in personsRating.Keys)
-            {
-                Console.WriteLine(person);
-            }
-        }
-    }
+            Console.WriteLine(a1.Equals(b, EqualityComparer<int>.Default));
 
-    class SurnameComparer : Comparer<string>
-    {
-        StringComparer strCmp;
+            var str1 = "Hello, my name is volodya".Split();
+            var str2 = "Hello, my name is Volodya".Split();
 
-        public SurnameComparer(CultureInfo ci)
-        {
-            strCmp = StringComparer.Create(ci, false);
-        }
+            Console.WriteLine(((IStructuralEquatable)str1).Equals(str2, StringComparer.InvariantCultureIgnoreCase));
 
-        public override int Compare(string x, string y)
-        {
-            return strCmp.Compare(Normalize(x), Normalize(y));
-        }
+            var t1 = Tuple.Create(1, "foo");
+            var t2 = Tuple.Create(1, "Foo");
 
-        private string Normalize(string s)
-        {
-            s = s.Trim();
-            if (s.StartsWith("MC", StringComparison.InvariantCultureIgnoreCase))
-            {
-                s = "MAC" + s.Substring(2);
-            }
-
-            return s;
+            Console.WriteLine(((IStructuralEquatable)t1).Equals(t2, StringComparer.InvariantCultureIgnoreCase));
         }
     }
 }
