@@ -8,14 +8,28 @@ namespace Education.Classes
 {
     public class Animal
     {
-        public string Name;
         public int Popularity;
         public Zoo Zoo { get; internal set; }
 
+        private string name;
+        public string Name
+        {
+            get { return name; }
+
+            set
+            {
+                if (Zoo != null)
+                {
+                    Zoo.Animals.NotifyNameChange(this, value);
+                    name = value;
+                }
+            }
+        }
+
         public Animal(string name, int popularity)
         {
-            Name = name;
-            Popularity = popularity;
+            this.Popularity = popularity;
+            this.name = name;
         }
     }
 }

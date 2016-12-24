@@ -33,7 +33,16 @@ namespace Education
             zoo.Animals.Add(kangaroo);
             zoo.Animals.Add(seaLion);
 
-            foreach(var animal in zoo.Animals)
+            foreach (var animal in zoo.Animals)
+            {
+                Console.WriteLine(animal.Name + " zoo: " + animal.Zoo.ZooName);
+            }
+
+            Console.WriteLine(zoo.Animals[0].Popularity);
+            Console.WriteLine(zoo.Animals["Mr Sea Lion"].Popularity);
+            zoo.Animals["Kangaroo"].Name = "Mr Robot";
+
+            foreach (var animal in zoo.Animals)
             {
                 Console.WriteLine(animal.Name + " zoo: " + animal.Zoo.ZooName);
             }
