@@ -8,6 +8,15 @@ namespace Education.Classes
 {
     public class Zoo
     {
-        public AnimalCollection Animals = new AnimalCollection();
+        public AnimalCollection Animals;
+
+        public string ZooName;
+
+        public Zoo(string zooName)
+        {
+            this.ZooName = zooName;
+
+            Animals = new AnimalCollection(this);
+        }
     }
 }

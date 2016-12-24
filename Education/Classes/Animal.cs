@@ -10,6 +10,7 @@ namespace Education.Classes
     {
         public string Name;
         public int Popularity;
+        public Zoo Zoo { get; internal set; }
 
         public Animal(string name, int popularity)
         {

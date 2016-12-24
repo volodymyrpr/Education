@@ -25,13 +25,23 @@ namespace Education
 
         private void DoEverything()
         {
-            Zoo zoo = new Zoo();
-            zoo.Animals.Add(new Animal("Kangaroo", 10));
-            zoo.Animals.Add(new Animal("Mr Sea Lion", 20));
+            Zoo zoo = new Zoo("Vinnytsia zoo");
+
+            var kangaroo = new Animal("Kangaroo", 10);
+            var seaLion = new Animal("Mr Sea Lion", 20);
+
+            zoo.Animals.Add(kangaroo);
+            zoo.Animals.Add(seaLion);
+
             foreach(var animal in zoo.Animals)
             {
-                Console.WriteLine(animal.Name);
+                Console.WriteLine(animal.Name + " zoo: " + animal.Zoo.ZooName);
             }
+
+            zoo.Animals.Clear();
+
+            Console.WriteLine(kangaroo.Name + " zoo: " + kangaroo.Zoo?.ZooName);
+            Console.WriteLine(seaLion.Name + " zoo: " + seaLion.Zoo?.ZooName);
         }
     }
 }
