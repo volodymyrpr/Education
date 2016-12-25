@@ -12,6 +12,7 @@ using System.Reflection;
 using Education.Classes;
 using System.Collections.ObjectModel;
 using System.Collections;
+using System.Linq;
 
 namespace Education
 {
@@ -27,22 +28,30 @@ namespace Education
 
         private void DoEverything()
         {
-            int[] a = new int[] { 1, 2, 3 };
-            int[] b = new int[] { 1, 2, 3 };
+            string[] names = { "Tom", "Dick", "Harry", "Mary", "Jay" };
 
-            IStructuralEquatable a1 = a;
+            var fluentContainsA = names
+                .Where(name => name.Contains("a") || name.Contains("A"))
+                .OrderBy(name => name.Length)
+                .Select(name => name.ToUpper());
 
-            Console.WriteLine(a1.Equals(b, EqualityComparer<int>.Default));
+            var queryExpressionContainsA =
+                from name in names
+                where name.Contains("a") || name.Contains("A")
+                orderby name.Length
+                select name.ToUpper();
 
-            var str1 = "Hello, my name is volodya".Split();
-            var str2 = "Hello, my name is Volodya".Split();
+            foreach(var name in fluentContainsA)
+            {
+                Console.Write(name + ", ");
+            }
 
-            Console.WriteLine(((IStructuralEquatable)str1).Equals(str2, StringComparer.InvariantCultureIgnoreCase));
+            Console.WriteLine();
 
-            var t1 = Tuple.Create(1, "foo");
-            var t2 = Tuple.Create(1, "Foo");
-
-            Console.WriteLine(((IStructuralEquatable)t1).Equals(t2, StringComparer.InvariantCultureIgnoreCase));
+            foreach (var name in queryExpressionContainsA)
+            {
+                Console.Write(name + ", ");
+            }
         }
     }
 }
