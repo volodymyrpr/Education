@@ -38,6 +38,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -54,6 +55,7 @@
     <Compile Include="Classes\Zoo.cs" />
     <Compile Include="IExecutable.cs" />
     <Compile Include="Linq\Composition.cs" />
+    <Compile Include="Linq\LINQ_to_db.cs" />
     <Compile Include="Linq\Projection.cs" />
     <Compile Include="Linq\Subquery.cs" />
     <Compile Include="Program.cs" />
