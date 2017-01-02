@@ -52,6 +52,10 @@
     <Compile Include="Classes\Area.cs" />
     <Compile Include="Classes\Note.cs" />
     <Compile Include="Classes\Zoo.cs" />
+    <Compile Include="IExecutable.cs" />
+    <Compile Include="Linq\Composition.cs" />
+    <Compile Include="Linq\Projection.cs" />
+    <Compile Include="Linq\Subquery.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
