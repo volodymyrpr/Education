@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Linq;
 using System.Data.Linq.Mapping;
+using System.Data.Entity.Core.Objects;
+using System.Data.Entity.Core.Objects.DataClasses;
 
 namespace Education.Linq
 {
@@ -16,15 +18,42 @@ namespace Education.Linq
             Table<Customer> customers = dataContext.GetTable<Customer>();
 
             var filteredCustomers = customers
-                .Where(customer => customer.Name.Contains("a"))
                 .OrderBy(customer => customer.Name.Length)
-                .Select(customer => customer.Name);
+                .Select(customer => customer.Name)
+                .Pair()
+                .Select((n, i) => "Pair " + i.ToString() + " = " + n);
 
-            foreach(var customer in filteredCustomers)
+            foreach (var customer in filteredCustomers)
             {
                 Console.WriteLine(customer);
             }
             Console.WriteLine();
+
+            ObjectContext objectContext = new ObjectContext("metadata = res://Education/TestModel.csdl|res://Education/TestModel.ssdl|res://Education/TestModel.msl;provider=System.Data.SqlClient;provider connection string=\"data source=WILDCREATURE;initial catalog=Education;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework\"");
+            objectContext.DefaultContainerName = "EducationEntities";
+            ObjectSet<Education.Customer> entityCustomers = objectContext.CreateObjectSet<Education.Customer>();
+
+            Console.WriteLine(entityCustomers.Count());
+        }
+    }
+
+    public static class Extesions
+    {
+        public static IEnumerable<string> Pair(this IEnumerable<string> source)
+        {
+            string firstHalf = null;
+            foreach (var element in source)
+            {
+                if (firstHalf == null)
+                {
+                    firstHalf = element;
+                }
+                else
+                {
+                    yield return firstHalf + ", " + element;
+                    firstHalf = null;
+                }
+            }
         }
     }
 
@@ -36,5 +65,15 @@ namespace Education.Linq
 
         [Column]
         public string Name;
+    }
+
+    [EdmEntityType(NamespaceName = "Education", Name = "EntitiyCustomer")]
+    public partial class EntitiyCustomer
+    {
+        [EdmScalarProperty(EntityKeyProperty = true, IsNullable = false)]
+        public int Id { get; set; }
+
+        [EdmScalarProperty(EntityKeyProperty =false, IsNullable =false)]
+        public string Name { get; set; }
     }
 }
