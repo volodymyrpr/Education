@@ -14,69 +14,97 @@ namespace Education.Linq
     {
         public void Execute()
         {
-            DoSomethingWithL2S();
+            //DoSomethingWithL2S();
 
-            DoSomethingWithEF();
+            //DoSomethingWithEF();
+
+            //SomeMoreTraining();
         }
 
-        private void DoSomethingWithL2S()
-        {
-            var context = new L2SContext();
+        //private void SomeMoreTraining()
+        //{
+        //    var context = new EFContext();
 
-            var filteredCustomers = context.Customers
-                .OrderBy(customer => customer.Name.Length)
-                .Select(customer => customer.Name)
-                .Pair()
-                .Select((n, i) => "Pair " + i.ToString() + " = " + n);
+        //    var query = from g in context.Groups
+        //                select
+        //                    from c in context.Customers
+        //                    select new { g.GroupName, c.Name };
+
+        //    foreach(var group in query)
+        //    {
+        //        foreach(var customer in group)
+        //        {
+        //            Console.WriteLine(customer.GroupName + ": " + customer.Name);
+        //        }
+        //    }
+        //    Console.WriteLine();
+
+        //    context.Groups.AddObject(new EDM.Group() { Id = 2, GroupName = "SuperGroup" });
+
+        //    context.Customers.AddObject(new EDM.Customer() { Id = 11, Name = "Superman", GroupId = 2 });
+        //    context.Customers.AddObject(new EDM.Customer() { Id = 12, Name = "Batman", GroupId = 2 });
+
+        //    context.SaveChanges();
+        //}
+
+        //private void DoSomethingWithL2S()
+        //{
+        //    var context = new L2SContext();
+
+        //    var filteredCustomers = context.Customers
+        //        .OrderBy(customer => customer.Name.Length)
+        //        .Select(customer => customer.Name)
+        //        .Pair()
+        //        .Select((n, i) => "Pair " + i.ToString() + " = " + n);
 
 
-            foreach (var customer in filteredCustomers)
-            {
-                Console.WriteLine(customer);
-            }
-            Console.WriteLine();
+        //    foreach (var customer in filteredCustomers)
+        //    {
+        //        Console.WriteLine(customer);
+        //    }
+        //    Console.WriteLine();
 
-            //var firstCustomer = context.Customers.OrderBy(customer => customer.Id).FirstOrDefault();
-            //firstCustomer.Name = "Tom the programmer";
+        //    //var firstCustomer = context.Customers.OrderBy(customer => customer.Id).FirstOrDefault();
+        //    //firstCustomer.Name = "Tom the programmer";
 
-            //context.SubmitChanges();
+        //    //context.SubmitChanges();
 
-            //Console.WriteLine(GetCustomers());
-        }
+        //    //Console.WriteLine(GetCustomers());
+        //}
 
-        private IEnumerable<Customer> GetCustomers()
-        {
-            using (var context = new L2SContext())
-            {
-                return context.GetTable<Customer>().Where(customer => customer.Name.StartsWith("Tom"));
-            }
-        }
+        //private IEnumerable<Customer> GetCustomers()
+        //{
+        //    using (var context = new L2SContext())
+        //    {
+        //        return context.GetTable<Customer>().Where(customer => customer.Name.StartsWith("Tom"));
+        //    }
+        //}
 
-        private void DoSomethingWithEF()
-        {
-            var context = new EFContext();
+        //private void DoSomethingWithEF()
+        //{
+        //    var context = new EFContext();
 
-            Console.WriteLine(context.Customers.Count());
+        //    Console.WriteLine(context.Customers.Count());
 
-            //var lastCustomer = context.Customers.OrderByDescending(customer => customer.Id).FirstOrDefault();
-            //lastCustomer.Name = "Jay the programmer";
+        //    //var lastCustomer = context.Customers.OrderByDescending(customer => customer.Id).FirstOrDefault();
+        //    //lastCustomer.Name = "Jay the programmer";
 
-            //context.SaveChanges();
+        //    //context.SaveChanges();
 
-            DoSomethingMoreWithEF();
-        }
+        //    DoSomethingMoreWithEF();
+        //}
 
-        private void DoSomethingMoreWithEF()
-        {
-            var context = new EFContext();
-            var firstGroup = context.Groups.FirstOrDefault();
+        //private void DoSomethingMoreWithEF()
+        //{
+        //    var context = new EFContext();
+        //    var firstGroup = context.Groups.FirstOrDefault();
 
-            foreach (var customer in firstGroup.Customers)
-            {
-                Console.WriteLine(customer.Name);
-            }
-            Console.WriteLine();
-        }
+        //    foreach (var customer in firstGroup.Customers)
+        //    {
+        //        Console.WriteLine(customer.Name);
+        //    }
+        //    Console.WriteLine();
+        //}
     }
 
     public static class Extesions
