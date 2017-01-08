@@ -64,27 +64,32 @@
     <Compile Include="Classes\Area.cs" />
     <Compile Include="Classes\Note.cs" />
     <Compile Include="Classes\Zoo.cs" />
-    <Compile Include="Customer.cs">
+    <Compile Include="Linq\EDM\Customer.cs">
       <DependentUpon>TestModel.tt</DependentUpon>
     </Compile>
     <Compile Include="IExecutable.cs" />
     <Compile Include="Linq\Composition.cs" />
+    <Compile Include="Linq\EDM\Group.cs">
+      <DependentUpon>TestModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Linq\EFContext.cs" />
+    <Compile Include="Linq\L2SContext.cs" />
     <Compile Include="Linq\LINQ_to_db.cs" />
     <Compile Include="Linq\Projection.cs" />
     <Compile Include="Linq\Subquery.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestModel.Context.cs">
+    <Compile Include="Linq\EDM\TestModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>TestModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="TestModel.cs">
+    <Compile Include="Linq\EDM\TestModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>TestModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="TestModel.Designer.cs">
+    <Compile Include="Linq\EDM\TestModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>TestModel.edmx</DependentUpon>
@@ -92,22 +97,22 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <EntityDeploy Include="TestModel.edmx">
+    <EntityDeploy Include="Linq\EDM\TestModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>TestModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <None Include="packages.config" />
-    <None Include="TestModel.edmx.diagram">
+    <None Include="Linq\EDM\TestModel.edmx.diagram">
       <DependentUpon>TestModel.edmx</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TestModel.Context.tt">
+    <Content Include="Linq\EDM\TestModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>TestModel.Context.cs</LastGenOutput>
       <DependentUpon>TestModel.edmx</DependentUpon>
     </Content>
-    <Content Include="TestModel.tt">
+    <Content Include="Linq\EDM\TestModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>TestModel.edmx</DependentUpon>
       <LastGenOutput>TestModel.cs</LastGenOutput>

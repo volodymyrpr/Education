@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Education
+namespace Education.Linq.EDM
 {
     using System;
     using System.Data.Entity;
@@ -26,5 +26,6 @@ namespace Education
         }
     
         public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<Group> Groups { get; set; }
     }
 }

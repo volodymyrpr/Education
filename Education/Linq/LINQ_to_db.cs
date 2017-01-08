@@ -14,14 +14,21 @@ namespace Education.Linq
     {
         public void Execute()
         {
-            DataContext dataContext = new DataContext("Data Source=WILDCREATURE;Initial Catalog=Education;Integrated Security=True;Connect Timeout=15;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
-            Table<Customer> customers = dataContext.GetTable<Customer>();
+            DoSomethingWithL2S();
 
-            var filteredCustomers = customers
+            DoSomethingWithEF();
+        }
+
+        private void DoSomethingWithL2S()
+        {
+            var context = new L2SContext();
+
+            var filteredCustomers = context.Customers
                 .OrderBy(customer => customer.Name.Length)
                 .Select(customer => customer.Name)
                 .Pair()
                 .Select((n, i) => "Pair " + i.ToString() + " = " + n);
+
 
             foreach (var customer in filteredCustomers)
             {
@@ -29,11 +36,46 @@ namespace Education.Linq
             }
             Console.WriteLine();
 
-            ObjectContext objectContext = new ObjectContext("metadata = res://Education/TestModel.csdl|res://Education/TestModel.ssdl|res://Education/TestModel.msl;provider=System.Data.SqlClient;provider connection string=\"data source=WILDCREATURE;initial catalog=Education;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework\"");
-            objectContext.DefaultContainerName = "EducationEntities";
-            ObjectSet<Education.Customer> entityCustomers = objectContext.CreateObjectSet<Education.Customer>();
+            //var firstCustomer = context.Customers.OrderBy(customer => customer.Id).FirstOrDefault();
+            //firstCustomer.Name = "Tom the programmer";
 
-            Console.WriteLine(entityCustomers.Count());
+            //context.SubmitChanges();
+
+            //Console.WriteLine(GetCustomers());
+        }
+
+        private IEnumerable<Customer> GetCustomers()
+        {
+            using (var context = new L2SContext())
+            {
+                return context.GetTable<Customer>().Where(customer => customer.Name.StartsWith("Tom"));
+            }
+        }
+
+        private void DoSomethingWithEF()
+        {
+            var context = new EFContext();
+
+            Console.WriteLine(context.Customers.Count());
+
+            //var lastCustomer = context.Customers.OrderByDescending(customer => customer.Id).FirstOrDefault();
+            //lastCustomer.Name = "Jay the programmer";
+
+            //context.SaveChanges();
+
+            DoSomethingMoreWithEF();
+        }
+
+        private void DoSomethingMoreWithEF()
+        {
+            var context = new EFContext();
+            var firstGroup = context.Groups.FirstOrDefault();
+
+            foreach (var customer in firstGroup.Customers)
+            {
+                Console.WriteLine(customer.Name);
+            }
+            Console.WriteLine();
         }
     }
 
@@ -73,7 +115,7 @@ namespace Education.Linq
         [EdmScalarProperty(EntityKeyProperty = true, IsNullable = false)]
         public int Id { get; set; }
 
-        [EdmScalarProperty(EntityKeyProperty =false, IsNullable =false)]
+        [EdmScalarProperty(EntityKeyProperty = false, IsNullable = false)]
         public string Name { get; set; }
     }
 }
