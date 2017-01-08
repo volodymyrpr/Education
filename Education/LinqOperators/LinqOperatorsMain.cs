@@ -16,7 +16,7 @@ namespace Education.LinqOperators
 
         public void Execute()
         {
-            WhereExecute();
+            TakeSkipExecute();
         }
 
         private void WhereExecute()
@@ -43,7 +43,7 @@ namespace Education.LinqOperators
 
             var queryIndexed = names.Where((name, position) => position % 2 == 0);
 
-            foreach(var name in queryIndexed)
+            foreach (var name in queryIndexed)
             {
                 Console.WriteLine(name);
             }
@@ -54,7 +54,7 @@ namespace Education.LinqOperators
                 .Where(customer => SqlMethods.Like(customer.Name, "%r%y%"))
                 .Select(customer => customer.Name);
 
-            foreach(var name in queryStrangeFiltering)
+            foreach (var name in queryStrangeFiltering)
             {
                 Console.WriteLine(name);
             }
@@ -83,6 +83,33 @@ namespace Education.LinqOperators
                 Console.WriteLine(name);
             }
             Console.WriteLine();
+        }
+
+        private void TakeSkipExecute()
+        {
+            int groupSize = 2;
+            int numberOfGroups = dataContext.Customers.Count() / 2 + (dataContext.Customers.Count() % 2 == 0 ? 0 : 1);
+
+            for (int groupNumber = 0; groupNumber < numberOfGroups; groupNumber++)
+            {
+                var currentGroup = dataContext
+                    .Customers
+                    .Skip(groupNumber * groupSize)
+                    .Take(groupSize)
+                    .Select(customer => customer.Name)
+                    .ToList();
+
+                foreach(var groupElement in currentGroup)
+                {
+                    Console.Write(groupElement);
+
+                    if (groupElement != currentGroup.Last())
+                    {
+                        Console.Write(", ");
+                    }
+                }
+                Console.WriteLine();
+            }
         }
     }
 }
