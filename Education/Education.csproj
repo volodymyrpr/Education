@@ -65,6 +65,8 @@
     <Compile Include="Classes\Note.cs" />
     <Compile Include="Classes\Zoo.cs" />
     <Compile Include="IExecutable.cs" />
+    <Compile Include="LinqOperators\LinqOperatorsMain.cs" />
+    <Compile Include="LinqOperators\NutshellContext.cs" />
     <Compile Include="Linq\Composition.cs" />
     <Compile Include="Linq\LINQ_to_db.cs" />
     <Compile Include="Linq\Projection.cs" />

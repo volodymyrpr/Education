@@ -18,7 +18,7 @@ namespace Education
 {
     class Program
     {
-        private IExecutable currentClass = new Linq.LINQ_to_db();
+        private IExecutable currentClass = new LinqOperators.LinqOperatorsMain();
 
         static void Main(string[] args)
         {
