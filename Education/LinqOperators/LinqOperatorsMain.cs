@@ -17,7 +17,7 @@ namespace Education.LinqOperators
 
         public void Execute()
         {
-            JoinExecute();
+            ExecuteGroupJoin();
         }
 
         private void WhereExecute()
@@ -100,7 +100,7 @@ namespace Education.LinqOperators
                     .Select(customer => customer.Name)
                     .ToList();
 
-                foreach(var groupElement in currentGroup)
+                foreach (var groupElement in currentGroup)
                 {
                     Console.Write(groupElement);
 
@@ -118,14 +118,14 @@ namespace Education.LinqOperators
             Console.WriteLine("Less than 4 digits long: ");
             var namesOrderedByLength = names.OrderBy(name => name.Length);
 
-            foreach(var name in namesOrderedByLength.TakeWhile(name => name.Length < 4))
+            foreach (var name in namesOrderedByLength.TakeWhile(name => name.Length < 4))
             {
                 Console.WriteLine(name);
             }
 
             Console.WriteLine("More than 3 digits long: ");
 
-            foreach(var name in namesOrderedByLength.SkipWhile(name => name.Length < 4))
+            foreach (var name in namesOrderedByLength.SkipWhile(name => name.Length < 4))
             {
                 Console.WriteLine(name);
             }
@@ -135,18 +135,18 @@ namespace Education.LinqOperators
         {
             char[] letters = { };
 
-            foreach(var name in names)
+            foreach (var name in names)
             {
                 letters = letters.Concat(name.ToArray()).ToArray();
             }
 
-            foreach(var letter in letters)
+            foreach (var letter in letters)
             {
                 Console.Write(letter);
             }
             Console.WriteLine();
 
-            foreach(var letter in letters.Distinct())
+            foreach (var letter in letters.Distinct())
             {
                 Console.Write(letter);
             }
@@ -154,11 +154,11 @@ namespace Education.LinqOperators
 
         private void SelectExecute()
         {
-            var namesDuplicated = names.Select((name, position) => new { Position = position, TheName = name, FirstLetter = name[0]});
+            var namesDuplicated = names.Select((name, position) => new { Position = position, TheName = name, FirstLetter = name[0] });
 
-            foreach(var dupName in namesDuplicated)
+            foreach (var dupName in namesDuplicated)
             {
-                Console.WriteLine(dupName.Position + ": " +dupName.TheName + " " + dupName.FirstLetter);
+                Console.WriteLine(dupName.Position + ": " + dupName.TheName + " " + dupName.FirstLetter);
             }
             Console.WriteLine();
 
@@ -174,14 +174,14 @@ namespace Education.LinqOperators
 
                     Files = from f in d.GetFiles()
                             where ((f.Attributes & FileAttributes.Hidden) == 0
-                                && (f.Attributes & FileAttributes.ReadOnly) == 0 )
+                                && (f.Attributes & FileAttributes.ReadOnly) == 0)
                             select new { FileName = f.Name, f.Length, }
                 };
 
-            foreach(var dirFiles in query)
+            foreach (var dirFiles in query)
             {
                 Console.WriteLine("Directory: " + dirFiles.DirectoryName);
-                foreach(var file in dirFiles.Files)
+                foreach (var file in dirFiles.Files)
                 {
                     Console.WriteLine(" " + file.FileName + " Len: " + file.Length);
                 }
@@ -208,7 +208,7 @@ namespace Education.LinqOperators
             {
                 Console.WriteLine(customer.Name + ": ");
 
-                foreach(var purchase in customer.Purchases)
+                foreach (var purchase in customer.Purchases)
                 {
                     Console.WriteLine(purchase.Description + ", " + purchase.Price);
                 }
@@ -233,7 +233,7 @@ namespace Education.LinqOperators
                          orderby name.Source, name.Name
                          select name.Name + " come from " + name.Source;
 
-            foreach(var name in query2)
+            foreach (var name in query2)
             {
                 Console.WriteLine(name);
             }
@@ -246,7 +246,7 @@ namespace Education.LinqOperators
                 .Select(name => name.Name + " come from " + name.Source);
 
 
-            foreach(var name in query3)
+            foreach (var name in query3)
             {
                 Console.WriteLine(name);
             }
@@ -259,7 +259,7 @@ namespace Education.LinqOperators
                                from l in letters
                                select n + l;
 
-            foreach(var combination in combinations)
+            foreach (var combination in combinations)
             {
                 Console.WriteLine(combination);
             }
@@ -271,7 +271,7 @@ namespace Education.LinqOperators
                         where player1.CompareTo(player2) > 0
                         select player1 + " and " + player2;
 
-            foreach(var pair in pairs)
+            foreach (var pair in pairs)
             {
                 Console.WriteLine(pair);
             }
@@ -286,7 +286,7 @@ namespace Education.LinqOperators
                     on c.ID equals p.CustomerID
                 select c.Name + " bought a " + p.Description;
 
-            foreach(var element in query)
+            foreach (var element in query)
             {
                 Console.WriteLine(element);
             }
@@ -299,7 +299,7 @@ namespace Education.LinqOperators
                             where c.ID == p.CustomerID
                             select c.Name + " bought " + p.Description;
 
-            foreach(var element in slowQuery)
+            foreach (var element in slowQuery)
             {
                 Console.WriteLine(element);
             }
@@ -308,25 +308,49 @@ namespace Education.LinqOperators
             var query2 = from c in customers
                          join p in purchases
                             on c.ID equals p.CustomerID
+                         orderby p.Price descending
                          select new { c.Name, p.Description, p.Price };
 
-            foreach(var element in query2)
+            foreach (var element in query2)
             {
                 Console.WriteLine(element.Name + " " + element.Description + " " + element.Price);
             }
             Console.WriteLine();
 
-            var query2Duplicate = customers.Join(
-                purchases,
-                c => c.ID,
-                p => p.CustomerID,
-                (c, p) => new { c.Name, p.Description, p.Price });
+            var query2Duplicate = customers
+                .Join(
+                    purchases,
+                    c => c.ID,
+                    p => p.CustomerID,
+                    (c, p) => new { c, p })
+                .OrderByDescending(element => element.p.Price)
+                .Select(element => new { element.c.Name, element.p.Description, element.p.Price });
 
             foreach (var element in query2Duplicate)
             {
                 Console.WriteLine(element.Name + " " + element.Description + " " + element.Price);
             }
             Console.WriteLine();
+        }
+
+        private void ExecuteGroupJoin()
+        {
+            Customer[] customers = dataContext.Customers.ToArray();
+            Purchase[] purchases = dataContext.Purchases.ToArray();
+
+            var query = from c in customers
+                        join p in purchases
+                            on c.ID equals p.CustomerID
+                        into groupResult
+                        select groupResult;
+
+            foreach(var element in query)
+            {
+                foreach(var subElement in element)
+                {
+                    Console.WriteLine(subElement.Description);
+                }
+            }
         }
     }
 }
