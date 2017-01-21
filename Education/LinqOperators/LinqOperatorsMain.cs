@@ -17,7 +17,7 @@ namespace Education.LinqOperators
 
         public void Execute()
         {
-            ExecuteGroupJoin();
+            ExecuteLookup();
         }
 
         private void WhereExecute()
@@ -367,9 +367,39 @@ namespace Education.LinqOperators
                     Price = cp == null ? (decimal?)null : cp.Price
                 };
 
-            foreach(var element in queryGroupedJoinToFlat)
+            foreach (var element in queryGroupedJoinToFlat)
             {
                 Console.WriteLine(element.CustName + " " + element.Price);
+            }
+            Console.WriteLine();
+        }
+
+        private void ExecuteLookup()
+        {
+            Customer[] customers = dataContext.Customers.ToArray();
+            Purchase[] purchases = dataContext.Purchases.ToArray();
+
+            var purchLookup = purchases.ToLookup(p => p.CustomerID, p => p);
+
+            foreach(var lookupElement in purchLookup[1])
+            {
+                Console.WriteLine(lookupElement.Description);
+            }
+            Console.WriteLine();
+
+            var selectManyExample =
+                from c in customers
+                from p in purchLookup[c.ID].DefaultIfEmpty()
+                select new
+                {
+                    CustName = c.Name,
+                    Description = p == null ? null : p.Description,
+                    Price = p == null ? null : (decimal?)p.Price
+                };
+
+            foreach(var purchase in selectManyExample)
+            {
+                Console.WriteLine(purchase.CustName + " " + purchase.Description + " " + purchase.Price);
             }
             Console.WriteLine();
         }
