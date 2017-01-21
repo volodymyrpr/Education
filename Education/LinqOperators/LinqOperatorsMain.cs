@@ -339,18 +339,39 @@ namespace Education.LinqOperators
             Purchase[] purchases = dataContext.Purchases.ToArray();
 
             var query = from c in customers
-                        join p in purchases
+                        join p in purchases.Where(purchase => purchase.Price > 1000)
                             on c.ID equals p.CustomerID
                         into groupResult
-                        select groupResult;
+                        where groupResult.Any()
+                        select new { CustName = c.Name, Purchases = groupResult };
 
-            foreach(var element in query)
+            foreach (var element in query)
             {
-                foreach(var subElement in element)
+                Console.WriteLine(element.CustName + ":");
+                foreach (var subElement in element.Purchases)
                 {
-                    Console.WriteLine(subElement.Description);
+                    Console.WriteLine(subElement.Description + " " + subElement.Price);
                 }
             }
+            Console.WriteLine();
+
+            var queryGroupedJoinToFlat =
+                from c in customers
+                join p in purchases
+                    on c.ID equals p.CustomerID
+                into custPurchases
+                from cp in custPurchases.DefaultIfEmpty()
+                select new
+                {
+                    CustName = c.Name,
+                    Price = cp == null ? (decimal?)null : cp.Price
+                };
+
+            foreach(var element in queryGroupedJoinToFlat)
+            {
+                Console.WriteLine(element.CustName + " " + element.Price);
+            }
+            Console.WriteLine();
         }
     }
 }
