@@ -17,7 +17,7 @@ namespace Education.LinqOperators
 
         public void Execute()
         {
-            ExecuteLookup();
+            ExecuteGrouping();
         }
 
         private void WhereExecute()
@@ -381,7 +381,7 @@ namespace Education.LinqOperators
 
             var purchLookup = purchases.ToLookup(p => p.CustomerID, p => p);
 
-            foreach(var lookupElement in purchLookup[1])
+            foreach (var lookupElement in purchLookup[1])
             {
                 Console.WriteLine(lookupElement.Description);
             }
@@ -397,11 +397,71 @@ namespace Education.LinqOperators
                     Price = p == null ? null : (decimal?)p.Price
                 };
 
-            foreach(var purchase in selectManyExample)
+            foreach (var purchase in selectManyExample)
             {
                 Console.WriteLine(purchase.CustName + " " + purchase.Description + " " + purchase.Price);
             }
             Console.WriteLine();
+
+            var query = from c in customers
+                        select new
+                        {
+                            CustName = c.Name,
+                            CustPurchases = purchLookup[c.ID]
+                        };
+        }
+
+        private void ExecuteZip()
+        {
+            int[] numbers = { 3, 5, 7 };
+            string[] words = { "three", "five", "seven", "ignored" };
+
+            var zipped = numbers.Zip(words, (number, word) => number + " = " + word);
+
+            foreach (var zip in zipped)
+            {
+                Console.WriteLine(zip);
+            }
+            Console.WriteLine();
+        }
+
+        private void ExecuteOrderBy()
+        {
+            var query = names
+                .OrderBy(name => name.Length)
+                .ThenBy(name => name);
+
+            foreach (var element in query)
+            {
+                Console.WriteLine(element);
+            }
+            Console.WriteLine();
+
+            var query2 = from name in names
+                         orderby name.Length, name[0], name[1]
+                         select name.ToUpper();
+
+            foreach (var element in query2)
+            {
+                Console.WriteLine(element);
+            }
+            Console.WriteLine();
+
+            var query3 = dataContext
+                .Purchases
+                .OrderBy(purchase => purchase.Customer.Name)
+                .ThenByDescending(purchase => purchase.Price);
+
+            foreach (var element in query3)
+            {
+                Console.WriteLine(element.Customer.Name + " " + element.Description + " " + element.Price);
+            }
+            Console.WriteLine();
+        }
+
+        private void ExecuteGrouping()
+        {
+
         }
     }
 }
