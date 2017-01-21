@@ -17,7 +17,7 @@ namespace Education.LinqOperators
 
         public void Execute()
         {
-            SelectManyExecute();
+            JoinExecute();
         }
 
         private void WhereExecute()
@@ -285,6 +285,48 @@ namespace Education.LinqOperators
                 join p in dataContext.Purchases
                     on c.ID equals p.CustomerID
                 select c.Name + " bought a " + p.Description;
+
+            foreach(var element in query)
+            {
+                Console.WriteLine(element);
+            }
+            Console.WriteLine();
+
+            Customer[] customers = dataContext.Customers.ToArray();
+            Purchase[] purchases = dataContext.Purchases.ToArray();
+            var slowQuery = from c in customers
+                            from p in purchases
+                            where c.ID == p.CustomerID
+                            select c.Name + " bought " + p.Description;
+
+            foreach(var element in slowQuery)
+            {
+                Console.WriteLine(element);
+            }
+            Console.WriteLine();
+
+            var query2 = from c in customers
+                         join p in purchases
+                            on c.ID equals p.CustomerID
+                         select new { c.Name, p.Description, p.Price };
+
+            foreach(var element in query2)
+            {
+                Console.WriteLine(element.Name + " " + element.Description + " " + element.Price);
+            }
+            Console.WriteLine();
+
+            var query2Duplicate = customers.Join(
+                purchases,
+                c => c.ID,
+                p => p.CustomerID,
+                (c, p) => new { c.Name, p.Description, p.Price });
+
+            foreach (var element in query2Duplicate)
+            {
+                Console.WriteLine(element.Name + " " + element.Description + " " + element.Price);
+            }
+            Console.WriteLine();
         }
     }
 }
