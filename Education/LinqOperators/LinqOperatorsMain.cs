@@ -19,7 +19,7 @@ namespace Education.LinqOperators
 
         public void Execute()
         {
-            ExecuteConverting();
+            ExecuteElementOperators();
         }
 
         private void WhereExecute()
@@ -579,7 +579,7 @@ namespace Education.LinqOperators
             Console.WriteLine();
 
             var castLong = classicList.OfType<int>().Select(element => (long)element);
-            foreach(var element in castLong)
+            foreach (var element in castLong)
             {
                 Console.WriteLine(element);
             }
@@ -588,7 +588,27 @@ namespace Education.LinqOperators
 
         private void ExecuteElementOperators()
         {
+            int[] array = { 1, 2, 3, 4, 5 };
 
+            Console.WriteLine(array.FirstOrDefault());
+
+            Console.WriteLine(array.LastOrDefault());
+
+            Console.WriteLine(array.FirstOrDefault(element => element % 2 == 0));
+
+            Console.WriteLine(array.LastOrDefault(element => element % 2 == 0));
+
+            //Console.WriteLine(array.First(element => element > 10));
+
+            Console.WriteLine(array.FirstOrDefault(element => element > 10));
+
+            //Console.WriteLine(array.SingleOrDefault(element => element > 3));
+
+            Console.WriteLine(array.SingleOrDefault(element => element > 10));
+
+            Console.WriteLine(array.ElementAt(2));
+
+            Console.WriteLine(array.ElementAtOrDefault(9));
         }
     }
 }
