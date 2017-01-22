@@ -633,7 +633,7 @@ namespace Education.LinqOperators
                 .Customers
                 .Where(element => element.Purchases.Average(p => p.Price) > 100);
 
-            foreach(var customer in query)
+            foreach (var customer in query)
             {
                 Console.WriteLine(customer.Name);
             }
@@ -647,8 +647,51 @@ namespace Education.LinqOperators
 
         private void ExecuteQuantifiers()
         {
-            bool hasThree = new int[] { 1, 3, 5 }.Contains(3);
-            Console.WriteLine(hasThree);
+            bool hasDick = names.Contains("Dick");
+            Console.WriteLine(hasDick);
+
+            bool hasDick2 = names.Any(name => name.Length > 5);
+            Console.WriteLine(hasDick2);
+            Console.WriteLine();
+
+            var query = from customer in dataContext.Customers
+                        where customer.Purchases.Any(purch => purch.Price > 1000)
+                        select customer.Name;
+            foreach (var element in query)
+            {
+                Console.WriteLine(element);
+            }
+            Console.WriteLine();
+
+            var queryLessThen1000 =
+                from customer in dataContext.Customers
+                where customer.Purchases.All(purch => purch.Price < 1000)
+                select customer.Name;
+            foreach (var customer in queryLessThen1000)
+            {
+                Console.WriteLine(customer);
+            }
+            Console.WriteLine();
+
+            var queryWithoutPurchases =
+                from customer in dataContext.Customers
+                where customer.Purchases == null || customer.Purchases.Count == 0
+                select customer.Name;
+            foreach (var customer in queryWithoutPurchases)
+            {
+                Console.WriteLine(customer);
+            }
+            Console.WriteLine();
+
+            foreach(var customer in dataContext.Customers)
+            {
+                Console.WriteLine(customer.Name);
+                foreach(var purchase in customer.Purchases)
+                {
+                    Console.WriteLine(" ---" + purchase.Price);
+                }
+            }
+            Console.WriteLine();
         }
     }
 }
