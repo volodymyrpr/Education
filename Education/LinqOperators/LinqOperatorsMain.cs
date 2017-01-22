@@ -19,7 +19,7 @@ namespace Education.LinqOperators
 
         public void Execute()
         {
-            ExecuteQuantifiers();
+            ExecuteGenerationMethods();
         }
 
         private void WhereExecute()
@@ -690,6 +690,40 @@ namespace Education.LinqOperators
                 {
                     Console.WriteLine(" ---" + purchase.Price);
                 }
+            }
+            Console.WriteLine();
+        }
+
+        private void ExecuteGenerationMethods()
+        {
+            foreach(var s in Enumerable.Empty<string>())
+            {
+                Console.WriteLine(s);
+            }
+
+            int[][] numbers =
+            {
+                new int[] { 1, 2, 3},
+                new int[] { 1, 3, 5},
+                null
+            };
+
+            var flat = numbers.SelectMany(inner => inner ?? Enumerable.Empty<int>());
+            foreach(var number in flat)
+            {
+                Console.WriteLine(number);
+            }
+            Console.WriteLine();
+
+            foreach(var i in Enumerable.Range(5, 3))
+            {
+                Console.WriteLine(i + " ");
+            }
+            Console.WriteLine();
+
+            foreach(var i in Enumerable.Repeat(34, 10))
+            {
+                Console.WriteLine(i);
             }
             Console.WriteLine();
         }
