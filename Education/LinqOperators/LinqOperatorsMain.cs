@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Linq;
 using System.Data.Linq.SqlClient;
@@ -18,7 +19,7 @@ namespace Education.LinqOperators
 
         public void Execute()
         {
-            ExecuteSetOperators();
+            ExecuteConverting();
         }
 
         private void WhereExecute()
@@ -471,7 +472,7 @@ namespace Education.LinqOperators
             foreach (IGrouping<string, string> element in query)
             {
                 Console.WriteLine("Extension: " + element.Key);
-                foreach(var subelement in element)
+                foreach (var subelement in element)
                 {
                     Console.WriteLine("   - " + subelement);
                 }
@@ -501,7 +502,7 @@ namespace Education.LinqOperators
                              TotalValue = salesByYear.Sum()
                          };
 
-            foreach(var element in query3)
+            foreach (var element in query3)
             {
                 Console.WriteLine(element.Month + " " + element.TotalValue);
             }
@@ -519,7 +520,7 @@ namespace Education.LinqOperators
             var except1 = array1.Except(array2);
             var except2 = array2.Except(array1);
 
-            foreach(var element in concat)
+            foreach (var element in concat)
             {
                 Console.WriteLine(element);
             }
@@ -558,6 +559,36 @@ namespace Education.LinqOperators
             //    Console.WriteLine(element);
             //}
             //Console.WriteLine();
+        }
+
+        private void ExecuteConverting()
+        {
+            ArrayList classicList = new ArrayList();
+            classicList.AddRange(new int[] { 3, 4, 5 });
+
+            DateTime offender = DateTime.Now;
+            classicList.Add(offender);
+
+            IEnumerable<int> sequence1 = classicList.Cast<int>();
+            IEnumerable<int> sequence2 = classicList.OfType<int>();
+
+            foreach (var element in sequence2)
+            {
+                Console.WriteLine(element);
+            }
+            Console.WriteLine();
+
+            var castLong = classicList.OfType<int>().Select(element => (long)element);
+            foreach(var element in castLong)
+            {
+                Console.WriteLine(element);
+            }
+            Console.WriteLine();
+        }
+
+        private void ExecuteElementOperators()
+        {
+
         }
     }
 }
