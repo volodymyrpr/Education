@@ -461,7 +461,52 @@ namespace Education.LinqOperators
 
         private void ExecuteGrouping()
         {
+            string[] files = Directory.GetFiles("E:\\Фільми");
 
+            IEnumerable<IGrouping<string, string>> query = files
+                .GroupBy(file => Path.GetExtension(file), file => file.ToUpper())
+                .OrderBy(file => file.Key);
+
+            foreach (IGrouping<string, string> element in query)
+            {
+                Console.WriteLine("Extension: " + element.Key);
+                foreach(var subelement in element)
+                {
+                    Console.WriteLine("   - " + subelement);
+                }
+            }
+            Console.WriteLine();
+
+            var query2 = from file in files
+                         group file.ToUpper() by Path.GetExtension(file) into grouping
+                         orderby grouping.Key
+                         select grouping;
+
+            foreach (IGrouping<string, string> element in query2)
+            {
+                Console.WriteLine("Extension: " + element.Key);
+                foreach (var subelement in element)
+                {
+                    Console.WriteLine("   - " + subelement);
+                }
+            }
+            Console.WriteLine();
+
+            var query3 = from p in dataContext.Purchases
+                         group p.Price by p.Date.Month into salesByYear
+                         select new
+                         {
+                             Month = salesByYear.Key,
+                             TotalValue = salesByYear.Sum()
+                         };
+
+            foreach(var element in query3)
+            {
+                Console.WriteLine(element.Month + " " + element.TotalValue);
+            }
+            Console.WriteLine();
         }
+
+
     }
 }
