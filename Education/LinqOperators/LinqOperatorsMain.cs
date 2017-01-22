@@ -4,6 +4,7 @@ using System.Data.Linq;
 using System.Data.Linq.SqlClient;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,7 +18,7 @@ namespace Education.LinqOperators
 
         public void Execute()
         {
-            ExecuteGrouping();
+            ExecuteSetOperators();
         }
 
         private void WhereExecute()
@@ -507,6 +508,56 @@ namespace Education.LinqOperators
             Console.WriteLine();
         }
 
+        private void ExecuteSetOperators()
+        {
+            int[] array1 = { 1, 2, 3 };
+            int[] array2 = { 3, 4, 5 };
 
+            var concat = array1.Concat(array2);
+            var union = array1.Union(array2);
+            var intersect = array1.Intersect(array2);
+            var except1 = array1.Except(array2);
+            var except2 = array2.Except(array1);
+
+            foreach(var element in concat)
+            {
+                Console.WriteLine(element);
+            }
+            Console.WriteLine();
+
+            foreach (var element in union)
+            {
+                Console.WriteLine(element);
+            }
+            Console.WriteLine();
+
+            foreach (var element in intersect)
+            {
+                Console.WriteLine(element);
+            }
+            Console.WriteLine();
+
+            foreach (var element in except1)
+            {
+                Console.WriteLine(element);
+            }
+            Console.WriteLine();
+
+            foreach (var element in except2)
+            {
+                Console.WriteLine(element);
+            }
+            Console.WriteLine();
+
+            //MethodInfo[] methods = typeof(string).GetMethods();
+            //PropertyInfo[] properties = typeof(string).GetProperties();
+            //IEnumerable<MemberInfo> both = methods.Concat<MemberInfo>(properties);
+
+            //foreach(var element in both)
+            //{
+            //    Console.WriteLine(element);
+            //}
+            //Console.WriteLine();
+        }
     }
 }
