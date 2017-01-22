@@ -19,7 +19,7 @@ namespace Education.LinqOperators
 
         public void Execute()
         {
-            ExecuteElementOperators();
+            ExecuteQuantifiers();
         }
 
         private void WhereExecute()
@@ -609,6 +609,46 @@ namespace Education.LinqOperators
             Console.WriteLine(array.ElementAt(2));
 
             Console.WriteLine(array.ElementAtOrDefault(9));
+        }
+
+        private void ExecuteAggregation()
+        {
+            int numOfDigits = "p1ssw0rd".Count(letter => char.IsDigit(letter));
+
+            Console.WriteLine(numOfDigits);
+
+            int[] array = { 28, 32, 14 };
+
+            Console.WriteLine(array.Min());
+            Console.WriteLine(array.Max());
+            Console.WriteLine(array.Max(number => number % 10));
+
+            var maxPrice = dataContext.Purchases.Max(purch => purch.Price);
+            Console.WriteLine(dataContext.Purchases.Where(purch => purch.Price == maxPrice).FirstOrDefault().Description);
+
+            Console.WriteLine(array.Sum(number => number % 10));
+            Console.WriteLine(array.Average(number => number % 10));
+
+            var query = dataContext
+                .Customers
+                .Where(element => element.Purchases.Average(p => p.Price) > 100);
+
+            foreach(var customer in query)
+            {
+                Console.WriteLine(customer.Name);
+            }
+            Console.WriteLine();
+
+            var sum = array.Aggregate(0, (total, n) => total + n);
+            var multiplication = array.Aggregate((total, n) => total * n);
+            Console.WriteLine(sum);
+            Console.WriteLine(multiplication);
+        }
+
+        private void ExecuteQuantifiers()
+        {
+            bool hasThree = new int[] { 1, 3, 5 }.Contains(3);
+            Console.WriteLine(hasThree);
         }
     }
 }
