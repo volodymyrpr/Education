@@ -67,6 +67,7 @@
     <Compile Include="IExecutable.cs" />
     <Compile Include="LinqOperators\LinqOperatorsMain.cs" />
     <Compile Include="LinqOperators\NutshellContext.cs" />
+    <Compile Include="LinqToXml\LinqToXmlMain.cs" />
     <Compile Include="Linq\Composition.cs" />
     <Compile Include="Linq\LINQ_to_db.cs" />
     <Compile Include="Linq\Projection.cs" />
@@ -90,6 +91,9 @@
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="LinqToXml\Customers.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
