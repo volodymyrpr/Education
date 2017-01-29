@@ -13,7 +13,7 @@ namespace Education.LinqToXml
         NutshellContext dataContext = new NutshellContext();
         public void Execute()
         {
-            UpdateNodes();
+            SomethingElse();
         }
 
         private void XDomOverviewExample()
@@ -159,7 +159,78 @@ namespace Education.LinqToXml
 
         private void UpdateNodes()
         {
+            var bench = new XElement("bench",
+                new XElement("toolbox",
+                    new XElement("handtool", "Hammer"),
+                    new XElement("handtool", "Rasp")),
+                new XElement("toolbox",
+                    new XElement("handtool", "Saw"),
+                    new XElement("powertool", "Nailgun")),
+                new XComment("Be careful with the nailgun")
+            );
 
+            var hammerContainer = bench
+                .Elements()
+                .Where(element => element.Elements().Where(subElement => subElement.Value == "Hammer").Count() > 0)
+                .FirstOrDefault();
+            //hammerContainer.Value = "replacement";
+            //hammerContainer.Add(new XComment("hammer is in this toolBox"));
+            //hammerContainer.AddFirst(new XComment("hammer is in this toolBox"));
+            //hammerContainer.RemoveAll();
+            //hammerContainer.ReplaceNodes(new XComment("replacement"));
+            hammerContainer.SetElementValue("supertool", "Pokemon");
+            hammerContainer.SetElementValue("supertool", "Digimon");
+
+            hammerContainer.AddBeforeSelf(new XElement("superToolBox", new XElement("magicTool", "Magic Wand")));
+            hammerContainer.Parent.FirstNode.ReplaceWith(new XComment("magic wand was here"));
+            Console.WriteLine(bench);
+            Console.WriteLine();
+
+            XElement contacts = XElement.Parse(
+            @"<contacts>
+                <customer name='Mary'/>
+                <customer name='Chris' archived='true'/>
+                <supplier name='Susan'>
+                    <phone archived='true'>012345678<!--confidential--></phone>
+                </supplier>
+            </contacts>");
+
+            //contacts.Elements("customer").Remove();
+            //contacts.Descendants()
+            //    .Where(e => (bool?)e.Attribute("archived") == true)
+            //    .Remove();
+            var supplier = contacts.Elements()
+                .Where(element => element.DescendantNodes().OfType<XComment>()
+                    .Where(comment => comment.Value == "confidential").Count() > 0)
+                .FirstOrDefault();
+
+            supplier.SetValue(17.0245);
+            Console.WriteLine(contacts);
+            Console.WriteLine();
+
+            var value = new XElement("three", 3.0);
+            double three = (double)value;
+            Console.WriteLine(three);
+            Console.WriteLine();
+        }
+
+        private void SomethingElse()
+        {
+            var summary = new XElement("summary",
+                new XText("lalala"),
+                new XElement("bold", "element"),
+                new XText("blablabla"));
+            Console.WriteLine(summary);
+
+            var e1 = new XElement("test1", "Hello");
+            e1.Add(" World!");
+
+            var e2 = new XElement("test2", "Hello World!");
+
+            var e3 = new XElement("test3", "Hello");
+            e3.Add(new XText(" World!"));
+
+            Console.WriteLine(e1.Nodes().Count() + " " + e2.Nodes().Count() + " " + e3.Nodes().Count());
         }
     }
 }
