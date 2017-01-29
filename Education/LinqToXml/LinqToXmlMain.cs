@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace Education.LinqToXml
@@ -13,7 +14,7 @@ namespace Education.LinqToXml
         NutshellContext dataContext = new NutshellContext();
         public void Execute()
         {
-            SomethingElse();
+            NamesNamespaces();
         }
 
         private void XDomOverviewExample()
@@ -91,7 +92,7 @@ namespace Education.LinqToXml
             Console.WriteLine();
 
             var elements = bench.Elements();
-            foreach(var element in elements)
+            foreach (var element in elements)
             {
                 Console.WriteLine(element);
             }
@@ -100,7 +101,7 @@ namespace Education.LinqToXml
             var nailGunElement = from element in elements
                                  where element.Elements().Any(subElement => subElement.Value == "Nailgun")
                                  select element.Value;
-            foreach(var element in nailGunElement)
+            foreach (var element in nailGunElement)
             {
                 Console.WriteLine(element);
             }
@@ -111,7 +112,7 @@ namespace Education.LinqToXml
                 from tool in toolBox.Elements()
                 where tool.Name == "handtool"
                 select tool;
-            foreach(var handTool in handTools)
+            foreach (var handTool in handTools)
             {
                 Console.WriteLine(handTool);
             }
@@ -124,7 +125,7 @@ namespace Education.LinqToXml
             var handTools2 =
                 from tool in bench.Elements("toolbox").Elements("handtool")
                 select tool.Value.ToUpper();
-            foreach(var handTool in handTools2)
+            foreach (var handTool in handTools2)
             {
                 Console.WriteLine(handTool);
             }
@@ -138,7 +139,7 @@ namespace Education.LinqToXml
             Console.WriteLine(bench.Descendants("handtool").Count());
             Console.WriteLine();
 
-            foreach(var node in bench.DescendantNodes())
+            foreach (var node in bench.DescendantNodes())
             {
                 Console.WriteLine(node.ToString(SaveOptions.DisableFormatting));
             }
@@ -150,7 +151,7 @@ namespace Education.LinqToXml
                 orderby c.Value
                 select c.Value;
 
-            foreach(var comment in query)
+            foreach (var comment in query)
             {
                 Console.WriteLine(comment);
             }
@@ -231,6 +232,62 @@ namespace Education.LinqToXml
             e3.Add(new XText(" World!"));
 
             Console.WriteLine(e1.Nodes().Count() + " " + e2.Nodes().Count() + " " + e3.Nodes().Count());
+        }
+
+        private void XDocument()
+        {
+            var styleInstruction = new XProcessingInstruction(
+                "xml-stylesheet", "href='styles.css' type='text/css'");
+
+            var docType = new XDocumentType("html",
+                "-//W3C//DTD XHTML 1.0 Strict//EN",
+                "http://www.w3.org/xhtml1/DTD/xhtml1-strict.dtd", null);
+
+            XNamespace ns = "http://w3.org/1999/xhtml";
+            var root =
+                new XElement(ns + "html",
+                    new XElement(ns + "head",
+                        new XElement(ns + "title", "An XHTML page")),
+                    new XElement(ns + "body",
+                        new XElement(ns + "p", "This is the content")));
+
+            var doc =
+                new XDocument(
+                    new XDeclaration("1.0", "utf-8", "no"),
+                    new XComment("Reference a stylesheet"),
+                    styleInstruction,
+                    docType,
+                    root);
+
+            doc.Save("test.html");
+
+            Console.WriteLine(doc);
+            Console.WriteLine();
+
+            Console.WriteLine(doc.Root.Name.LocalName);
+            Console.WriteLine(doc.Root.Name);
+            Console.WriteLine(doc.Root.Parent == null);
+            foreach (var node in doc.Nodes())
+            {
+                Console.WriteLine(node.Parent == null);
+            }
+            Console.WriteLine();
+
+            var doc2 = new XDocument(
+                new XDeclaration("1.0", "utf-8", "yes"),
+                new XElement("test", "data"));
+            var output = new StringBuilder();
+            var settings = new XmlWriterSettings { Indent = true };
+            using (XmlWriter xw = XmlWriter.Create(output, settings))
+            {
+                doc2.Save(xw);
+            }
+            Console.WriteLine(output);
+        }
+
+        private void NamesNamespaces()
+        {
+
         }
     }
 }
