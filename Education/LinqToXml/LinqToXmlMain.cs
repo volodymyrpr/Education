@@ -13,7 +13,7 @@ namespace Education.LinqToXml
         NutshellContext dataContext = new NutshellContext();
         public void Execute()
         {
-            NavigatingLinqToXml();
+            UpdateNodes();
         }
 
         private void XDomOverviewExample()
@@ -105,6 +105,61 @@ namespace Education.LinqToXml
                 Console.WriteLine(element);
             }
             Console.WriteLine();
+
+            var handTools =
+                from toolBox in elements
+                from tool in toolBox.Elements()
+                where tool.Name == "handtool"
+                select tool;
+            foreach(var handTool in handTools)
+            {
+                Console.WriteLine(handTool);
+            }
+            Console.WriteLine();
+
+            int x = bench.Elements("toolbox").Count();
+            Console.WriteLine(x);
+            Console.WriteLine();
+
+            var handTools2 =
+                from tool in bench.Elements("toolbox").Elements("handtool")
+                select tool.Value.ToUpper();
+            foreach(var handTool in handTools2)
+            {
+                Console.WriteLine(handTool);
+            }
+            Console.WriteLine();
+
+            XElement settings = XElement.Load("C:\\Users\\Володимир\\Documents\\Visual Studio 2015\\Projects\\Education\\Education\\App.config");
+            var connectionStrings = settings.Element("connectionStrings");
+            Console.WriteLine(connectionStrings);
+            Console.WriteLine();
+
+            Console.WriteLine(bench.Descendants("handtool").Count());
+            Console.WriteLine();
+
+            foreach(var node in bench.DescendantNodes())
+            {
+                Console.WriteLine(node.ToString(SaveOptions.DisableFormatting));
+            }
+            Console.WriteLine();
+
+            IEnumerable<string> query =
+                from c in bench.DescendantNodes().OfType<XComment>()
+                where c.Value.Contains("careful")
+                orderby c.Value
+                select c.Value;
+
+            foreach(var comment in query)
+            {
+                Console.WriteLine(comment);
+            }
+            Console.WriteLine();
+        }
+
+        private void UpdateNodes()
+        {
+
         }
     }
 }
