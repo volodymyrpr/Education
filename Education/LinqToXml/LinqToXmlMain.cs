@@ -14,7 +14,7 @@ namespace Education.LinqToXml
         NutshellContext dataContext = new NutshellContext();
         public void Execute()
         {
-            ProjectinIntoXDom();
+            ProjectingIntoXDom();
         }
 
         private void XDomOverviewExample()
@@ -389,9 +389,100 @@ namespace Education.LinqToXml
             e.RemoveAnnotations<CustomData>();
         }
 
-        private void ProjectinIntoXDom()
+        private void ProjectingIntoXDom()
         {
+            var customers = new XElement("customers",
+                new XElement("customer", new XAttribute("id", 1),
+                    new XElement("name", "Sue"),
+                    new XElement("buys", 3)));
 
+            var customersProjection =
+                new XElement("customers",
+                    from c in dataContext.Customers
+                    let lastBigBuy = (from p in c.Purchases
+                                      where p.Price > 1000
+                                      orderby p.Date descending
+                                      select new { p.Description, p.Price }).FirstOrDefault()
+                    select
+                        new XElement("customer", new XAttribute("id", c.ID),
+                            new XElement("name", c.Name),
+                            new XElement("buys", c.Purchases.Count),
+                            lastBigBuy != null 
+                                ? new XElement("lastBigBuy",
+                                    new XElement("description", lastBigBuy.Description),
+                                    new XElement("price", lastBigBuy.Price))
+                                : null));
+
+            Console.WriteLine(customersProjection);
+            Console.WriteLine();
+
+            var customersProjectionStreaming =
+                new XStreamingElement("customers",
+                    from c in dataContext.Customers
+                    let lastBigBuy = (from p in c.Purchases
+                                      where p.Price > 1000
+                                      orderby p.Date descending
+                                      select new { p.Description, p.Price }).FirstOrDefault()
+                    select
+                        new XStreamingElement("customer", new XAttribute("id", c.ID),
+                            new XStreamingElement("name", c.Name),
+                            new XStreamingElement("buys", c.Purchases.Count),
+                            lastBigBuy != null
+                                ? new XStreamingElement("lastBigBuy",
+                                    new XStreamingElement("description", lastBigBuy.Description),
+                                    new XStreamingElement("price", lastBigBuy.Price))
+                                : null));
+            Console.WriteLine(customersProjectionStreaming);
+            Console.WriteLine();
+
+            var project = XElement.Load("C:\\Users\\Володимир\\Documents\\Visual Studio 2015\\Projects\\Education\\Education\\Education.csproj");
+            XNamespace ns = project.Name.Namespace;
+            var query = new XElement("ProjectReport",
+                from compileItem in project.Elements(ns + "ItemGroup").Elements(ns + "Compile")
+                let include = compileItem.Attribute("Include")
+                where include != null
+                select new XElement("File", include.Value));
+            Console.WriteLine(query);
+            Console.WriteLine();
+
+            IEnumerable<string> paths =
+                from compileItem in
+                    project.Elements(ns + "ItemGroup").Elements(ns + "Compile")
+                let include = compileItem.Attribute("Include")
+                where include != null
+                select include.Value;
+
+            var query2 = new XElement("Project", ExpandPaths(paths));
+            Console.WriteLine(query2);
+            Console.WriteLine();
+        }
+
+        static IEnumerable<XElement> ExpandPaths(IEnumerable<string> paths)
+        {
+            var brokenUp =
+                from path in paths
+                let split = path.Split(new char[] { '\\' }, 2)
+                orderby split[0]
+                select new
+                {
+                    name = split[0],
+                    remainder = split.ElementAtOrDefault(1)
+                };
+
+            IEnumerable<XElement> files =
+                from b in brokenUp
+                where b.remainder == null
+                select new XElement("file", b.name);
+
+            IEnumerable<XElement> folders =
+                from b in brokenUp
+                where b.remainder != null
+                group b.remainder by b.name into grp
+                select new XElement("folder",
+                    new XAttribute("name", grp.Key),
+                    ExpandPaths(grp));
+
+            return files.Concat(folders);
         }
     }
 
