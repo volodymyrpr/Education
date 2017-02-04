@@ -287,7 +287,91 @@ namespace Education.LinqToXml
 
         private void NamesNamespaces()
         {
+            string customer = @"
+                <nut:customer xmlns:nut='OReilly.Nutshell.CSharp'
+                    xmlns:i='http://www.w3.org/2001/XMLSchemainstance'
+                    xmlns:z='http://schemas.microsoft.com/2003/10/Serialization/'>
+                    <adress>
+                        <nut:postcode>02138</postcode>
+                    </adress>
+                </customer>";
 
+            Console.WriteLine(customer);
+            Console.WriteLine();
+
+            string customer2 = @"
+                <customer xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
+                    <firstname>Joe</firstname>
+                    <lastname xsi:nil='true'/>
+                </customer>";
+            Console.WriteLine(customer2);
+            Console.WriteLine();
+
+            var e = new XElement("{http://domain.com/xmlspace}customer", "Bloggs");
+            Console.WriteLine(e.ToString());
+            Console.WriteLine();
+
+            XNamespace ns = "http://domain.com/xmlspace";
+            XName localName = "customer";
+            XName fullName = "{http://domain.com/xmlspace}customer";
+            XName fullNameNew = ns + "customer";
+            Console.WriteLine(fullNameNew);
+            Console.WriteLine();
+
+            var data = new XElement(ns + "data",
+                new XAttribute(ns + "id", 123));
+            Console.WriteLine(data);
+            Console.WriteLine();
+
+            var data2 = new XElement(ns + "data",
+                new XElement(ns + "customer", "Bloggs"),
+                new XElement(ns + "purchase", "Bycicle"));
+
+            Console.WriteLine(data2);
+            Console.WriteLine();
+
+            var data3 = new XElement(ns + "data",
+                new XElement("customer", "Bloggs"),
+                new XElement("purchase", "Bycicle"));
+
+            Console.WriteLine(data3);
+            Console.WriteLine();
+
+            var element1 = data2.Element(ns + "customer");
+            var element2 = data2.Element("customer");
+
+            Console.WriteLine(element1);
+            Console.WriteLine(element2);
+            Console.WriteLine();
+
+            XNamespace ns1 = "http://domain.com/space1";
+            XNamespace ns2 = "http://domain.com/space2";
+
+            var mix = new XElement(ns1 + "data",
+                new XElement(ns2 + "element", "value"),
+                new XElement(ns2 + "element", "value"),
+                new XElement(ns2 + "element", "value"));
+
+            Console.WriteLine(mix);
+            Console.WriteLine();
+
+            mix.SetAttributeValue(XNamespace.Xmlns + "ns1", ns1);
+            mix.SetAttributeValue(XNamespace.Xmlns + "ns2", ns2);
+            Console.WriteLine(mix);
+            Console.WriteLine();
+
+            XNamespace xsi = "http://w3.org/2001/XMLSchema-instance";
+            var nil = new XAttribute(xsi + "nil", true);
+
+            var cust = new XElement("cutomers",
+                new XAttribute(XNamespace.Xmlns + "xsi", xsi),
+                new XElement("customer",
+                    new XElement("lastname", "Bloggs"),
+                    new XElement("dob", nil),
+                    new XElement("credit", nil)));
+
+            Console.WriteLine(cust);
+            Console.WriteLine();
         }
     }
 }
