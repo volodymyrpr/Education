@@ -14,7 +14,7 @@ namespace Education.LinqToXml
         NutshellContext dataContext = new NutshellContext();
         public void Execute()
         {
-            NamesNamespaces();
+            ProjectinIntoXDom();
         }
 
         private void XDomOverviewExample()
@@ -373,5 +373,27 @@ namespace Education.LinqToXml
             Console.WriteLine(cust);
             Console.WriteLine();
         }
+
+        private void Annotations()
+        {
+            XElement e = new XElement("test");
+            e.AddAnnotation("Hello");
+            Console.WriteLine(e.Annotation<string>());
+            Console.WriteLine();
+
+            XElement test = new XElement("test");
+            e.AddAnnotation(new CustomData() { Message = "Hello!" });
+            Console.WriteLine(e.Annotations<CustomData>().First().Message);
+            Console.WriteLine();
+
+            e.RemoveAnnotations<CustomData>();
+        }
+
+        private void ProjectinIntoXDom()
+        {
+
+        }
     }
+
+    class CustomData { internal string Message; }
 }
