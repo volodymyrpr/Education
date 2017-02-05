@@ -1,0 +1,8 @@
+﻿<customer id="123" status="archived">
+  <firstname>Jim</firstname>
+  <averagePrice>234.46</averagePrice>
+  <age>23</age>
+  <emptyelement/>
+  <quote><![CDATA[C#'s operators include: < > &]]></quote>
+  <!-- That wasn't so bad! -->
+</customer>

@@ -18,7 +18,7 @@ namespace Education
 {
     class Program
     {
-        private IExecutable currentClass = new LinqToXml.LinqToXmlMain();
+        private IExecutable currentClass = new OtherXmlTechnologies.OtherXmlTechnologiesMain();
 
         static void Main(string[] args)
         {
