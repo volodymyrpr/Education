@@ -96,6 +96,7 @@
   <ItemGroup>
     <Content Include="LinqToXml\Customers.xml" />
     <Content Include="OtherXmlTechnologies\Customers.xml" />
+    <Content Include="OtherXmlTechnologies\CustomersWrite.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

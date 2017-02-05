@@ -1,0 +1,5 @@
+﻿<o:customer age="23" xmlns:o="http://oreilly.com">
+  <o:firstname>Jim</o:firstname>
+  <o:lastname>Bo</o:lastname>
+  <birthdate>2017-02-05T23:10:31.6572251+02:00</birthdate>
+</o:customer>

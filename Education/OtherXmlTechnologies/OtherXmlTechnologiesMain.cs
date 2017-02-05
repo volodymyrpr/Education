@@ -13,7 +13,7 @@ namespace Education.OtherXmlTechnologies
         NutshellContext dataContext = new NutshellContext();
         public void Execute()
         {
-            XmlReaderExample();
+            XmlWriterExample();
         }
 
         private void XmlReaderExample()
@@ -98,6 +98,29 @@ namespace Education.OtherXmlTechnologies
                 Console.WriteLine(lastName);
                 Console.WriteLine(averagePrice);
                 Console.WriteLine(age);
+            }
+        }
+
+        private void XmlWriterExample()
+        {
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Indent = true;
+            settings.OmitXmlDeclaration = true;
+
+            using (var writer = XmlWriter.Create(
+                "C:\\Users\\Володимир\\Documents\\Visual Studio 2015\\Projects\\Education\\Education\\OtherXmlTechnologies\\CustomersWrite.xml",
+                settings))
+            {
+                writer.WriteStartElement("o", "customer", "http://oreilly.com");
+                writer.WriteStartAttribute("age");
+                writer.WriteValue(23);
+                writer.WriteEndAttribute();
+                writer.WriteElementString("o", "firstname", "http://oreilly.com", "Jim");
+                writer.WriteElementString("o", "lastname", "http://oreilly.com", "Bo");
+                writer.WriteStartElement("birthdate");
+                writer.WriteValue(DateTime.Now);
+                writer.WriteEndElement();
+                writer.WriteEndElement();
             }
         }
     }
