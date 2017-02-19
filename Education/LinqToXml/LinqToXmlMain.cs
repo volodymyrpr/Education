@@ -407,7 +407,7 @@ namespace Education.LinqToXml
                         new XElement("customer", new XAttribute("id", c.ID),
                             new XElement("name", c.Name),
                             new XElement("buys", c.Purchases.Count),
-                            lastBigBuy != null 
+                            lastBigBuy != null
                                 ? new XElement("lastBigBuy",
                                     new XElement("description", lastBigBuy.Description),
                                     new XElement("price", lastBigBuy.Price))
@@ -456,6 +456,8 @@ namespace Education.LinqToXml
             Console.WriteLine(query2);
             Console.WriteLine();
         }
+
+        
 
         static IEnumerable<XElement> ExpandPaths(IEnumerable<string> paths)
         {

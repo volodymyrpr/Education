@@ -11,9 +11,14 @@ namespace Education.OtherXmlTechnologies
     class OtherXmlTechnologiesMain : IExecutable
     {
         NutshellContext dataContext = new NutshellContext();
+
+        public IList<Customer> Customers = new List<Customer>();
+
+        public IList<Supplier> Suppliers = new List<Supplier>();
+
         public void Execute()
         {
-            XmlWriterExample();
+            ReaderWriterPatterns();
         }
 
         private void XmlReaderExample()
@@ -121,6 +126,78 @@ namespace Education.OtherXmlTechnologies
                 writer.WriteValue(DateTime.Now);
                 writer.WriteEndElement();
                 writer.WriteEndElement();
+            }
+        }
+
+        private void ReaderWriterPatterns()
+        {
+            var settingsRead = new XmlReaderSettings()
+            {
+                IgnoreWhitespace = true
+            };
+
+            using (var reader = XmlReader.Create(
+                "C:\\Users\\Володимир\\Documents\\Visual Studio 2015\\Projects\\Education\\Education\\OtherXmlTechnologies\\Customers.xml"
+                , settingsRead))
+            {
+                ReadXml(reader);
+            }
+
+            XmlWriterSettings settingsWrite = new XmlWriterSettings();
+            settingsWrite.OmitXmlDeclaration = true;
+            settingsWrite.Indent = true;
+            settingsWrite.ConformanceLevel = ConformanceLevel.Auto;
+
+            using (var writer = XmlWriter.Create(
+                "C:\\Users\\Володимир\\Documents\\Visual Studio 2015\\Projects\\Education\\Education\\OtherXmlTechnologies\\CustomersWrite.xml",
+                settingsWrite))
+            {
+                WriteXml(writer);
+            }
+        }
+
+        public void ReadXml(XmlReader r)
+        {
+            bool isEmpty = r.IsEmptyElement;
+            r.ReadStartElement();
+            if (isEmpty)
+            {
+                return;
+            }
+
+            while (r.NodeType == XmlNodeType.Element)
+            {
+                if (r.Name == Customer.XmlName)
+                {
+                    Customers.Add(new Customer(r));
+                }
+                else if (r.Name == Supplier.XmlName)
+                {
+                    Suppliers.Add(new Supplier(r));
+                }
+                else
+                {
+                    throw new XmlException("Unexpected node: " + r.Name);
+                }
+            }
+
+            r.ReadEndElement();
+        }
+
+        public void WriteXml(XmlWriter w)
+        {
+            foreach(Customer c in Customers)
+            {
+                w.WriteStartElement(Customer.XmlName);
+                c.WriteXml(w);
+                w.WriteEndElement();
+            }
+
+            foreach(Supplier s in Suppliers)
+            {
+                w.WriteStartElement(Supplier.XmlName);
+                s.WriteXml(w);
+                w.WriteEndElement();
             }
         }
     }

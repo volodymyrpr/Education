@@ -1,8 +1,14 @@
-﻿<customer id="123" status="archived">
-  <firstname>Jim</firstname>
-  <averagePrice>234.46</averagePrice>
-  <age>23</age>
-  <emptyelement/>
-  <quote><![CDATA[C#'s operators include: < > &]]></quote>
-  <!-- That wasn't so bad! -->
-</customer>
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<contacts>
+  <customer id="1">
+    <firstname>Jay</firstname>
+    <lastname>Dee</lastname>
+  </customer>
+  <customer>
+    <firstname>Kay</firstname>
+    <lastname>Gee</lastname>
+  </customer>
+  <supplier>
+    <name>X Technologies Ltd</name>
+  </supplier>
+</contacts>
