@@ -65,16 +65,16 @@
     <Compile Include="Classes\Note.cs" />
     <Compile Include="Classes\Zoo.cs" />
     <Compile Include="IExecutable.cs" />
-    <Compile Include="LinqOperators\LinqOperatorsMain.cs" />
-    <Compile Include="LinqOperators\NutshellContext.cs" />
-    <Compile Include="LinqToXml\LinqToXmlMain.cs" />
-    <Compile Include="Linq\Composition.cs" />
-    <Compile Include="Linq\LINQ_to_db.cs" />
-    <Compile Include="Linq\Projection.cs" />
-    <Compile Include="Linq\Subquery.cs" />
-    <Compile Include="OtherXmlTechnologies\Customer.cs" />
-    <Compile Include="OtherXmlTechnologies\OtherXmlTechnologiesMain.cs" />
-    <Compile Include="OtherXmlTechnologies\Supplier.cs" />
+    <Compile Include="09. LinqOperators\LinqOperatorsMain.cs" />
+    <Compile Include="09. LinqOperators\NutshellContext.cs" />
+    <Compile Include="10. LinqToXml\LinqToXmlMain.cs" />
+    <Compile Include="08. Linq\Composition.cs" />
+    <Compile Include="08. Linq\LINQ_to_db.cs" />
+    <Compile Include="08. Linq\Projection.cs" />
+    <Compile Include="08. Linq\Subquery.cs" />
+    <Compile Include="11. OtherXmlTechnologies\Customer.cs" />
+    <Compile Include="11. OtherXmlTechnologies\OtherXmlTechnologiesMain.cs" />
+    <Compile Include="11. OtherXmlTechnologies\Supplier.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -96,11 +96,14 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="LinqToXml\Customers.xml">
+    <Content Include="10. LinqToXml\Customers.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="OtherXmlTechnologies\Customers.xml" />
-    <Content Include="OtherXmlTechnologies\CustomersWrite.xml" />
+    <Content Include="11. OtherXmlTechnologies\Customers.xml" />
+    <Content Include="11. OtherXmlTechnologies\CustomersWrite.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="12. Disposal and Garbage Collection\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
