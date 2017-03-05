@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="12. Disposal and Garbage Collection\Main.cs" />
     <Compile Include="Classes\Animal.cs" />
     <Compile Include="Classes\AnimalCollection.cs" />
     <Compile Include="Classes\Area.cs" />
@@ -102,9 +103,7 @@
     <Content Include="11. OtherXmlTechnologies\Customers.xml" />
     <Content Include="11. OtherXmlTechnologies\CustomersWrite.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="12. Disposal and Garbage Collection\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,24 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Globalization;
-using System.IO;
-using System.Text;
-using System.Drawing;
-using System.Threading;
-using System.Numerics;
-using System.Diagnostics;
-using System.Reflection;
-using Education.Classes;
-using System.Collections.ObjectModel;
-using System.Collections;
-using System.Linq;
 
 namespace Education
 {
     class Program
     {
-        private IExecutable currentClass = new OtherXmlTechnologies.OtherXmlTechnologiesMain();
+        private IExecutable currentClass = new _12._Disposal_and_Garbage_Collection.Main();
 
         static void Main(string[] args)
         {
