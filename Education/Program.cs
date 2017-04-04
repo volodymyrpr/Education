@@ -4,7 +4,7 @@ namespace Education
 {
     class Program
     {
-        private IExecutable currentClass = new _13._Diagnostics_and_Code_Contracts.Main();
+        private IExecutable currentClass = new _14._Concurrency_and_Asynchrony.Main();
 
         static void Main(string[] args)
         {
