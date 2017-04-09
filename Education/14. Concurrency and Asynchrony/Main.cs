@@ -105,8 +105,8 @@ namespace Education._14._Concurrency_and_Asynchrony
     {
         public void Execute()
         {
-            Optimization optimizationTest = new Optimization();
-            optimizationTest.Execute();
+            Cancellation cancellationTest = new Cancellation();
+            cancellationTest.Execute();
         }
 
         private void JoinExample()
