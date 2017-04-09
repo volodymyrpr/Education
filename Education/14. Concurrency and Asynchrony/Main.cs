@@ -105,7 +105,8 @@ namespace Education._14._Concurrency_and_Asynchrony
     {
         public void Execute()
         {
-            AsynchronousFunctions();
+            Optimization optimizationTest = new Optimization();
+            optimizationTest.Execute();
         }
 
         private void JoinExample()
@@ -484,6 +485,30 @@ namespace Education._14._Concurrency_and_Asynchrony
         {
             await Task.Delay(3000);
             return 21 * 2;
+        }
+
+        private async void LambdaExpressionsAsync()
+        {
+            Func<Task<string>> unnamed = async () =>
+            {
+                await Task.Delay(2000);
+                return "Something happened again";
+            };
+
+            var task1 = NamedMethod();
+            var task2 = unnamed();
+
+            task1.ContinueWith(task => Console.WriteLine(task.Result));
+            task2.ContinueWith(task => Console.WriteLine(task.Result));
+
+            await task1;
+            await task2;
+        }
+
+        private async Task<string> NamedMethod()
+        {
+            await Task.Delay(3000);
+            return "Something happened";
         }
     }
 }

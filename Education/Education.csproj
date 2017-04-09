@@ -106,6 +106,7 @@
     <Compile Include="12. Disposal and Garbage Collection\Main.cs" />
     <Compile Include="13. Diagnostics and Code Contracts\Main.cs" />
     <Compile Include="14. Concurrency and Asynchrony\Main.cs" />
+    <Compile Include="14. Concurrency and Asynchrony\Optimization.cs" />
     <Compile Include="Classes\Animal.cs" />
     <Compile Include="Classes\AnimalCollection.cs" />
     <Compile Include="Classes\Area.cs" />
