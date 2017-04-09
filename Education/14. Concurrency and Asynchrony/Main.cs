@@ -105,8 +105,8 @@ namespace Education._14._Concurrency_and_Asynchrony
     {
         public void Execute()
         {
-            Cancellation cancellationTest = new Cancellation();
-            cancellationTest.Execute();
+            ProgressReporting progressReportingTest = new ProgressReporting();
+            progressReportingTest.Execute();
         }
 
         private void JoinExample()
