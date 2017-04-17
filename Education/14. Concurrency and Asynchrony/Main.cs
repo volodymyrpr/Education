@@ -105,7 +105,7 @@ namespace Education._14._Concurrency_and_Asynchrony
     {
         public void Execute()
         {
-            ProgressReporting progressReportingTest = new ProgressReporting();
+            TaskBasedAsynchronousPattern progressReportingTest = new TaskBasedAsynchronousPattern();
             progressReportingTest.Execute();
         }
 
