@@ -110,6 +110,10 @@
     <Compile Include="14. Concurrency and Asynchrony\Optimization.cs" />
     <Compile Include="14. Concurrency and Asynchrony\ProgressReporting.cs" />
     <Compile Include="14. Concurrency and Asynchrony\TaskBasedAsynchronousPattern.cs" />
+    <Compile Include="15StreamsAndIO\FileStreamTest.cs" />
+    <Compile Include="15StreamsAndIO\Main.cs" />
+    <Compile Include="15StreamsAndIO\MemoryStreamTest.cs" />
+    <Compile Include="15StreamsAndIO\PipeStreamTest.cs" />
     <Compile Include="Classes\Animal.cs" />
     <Compile Include="Classes\AnimalCollection.cs" />
     <Compile Include="Classes\Area.cs" />

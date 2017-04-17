@@ -4,7 +4,7 @@ namespace Education
 {
     class Program
     {
-        private IExecutable currentClass = new _14._Concurrency_and_Asynchrony.Main();
+        private IExecutable currentClass = new _15StreamsAndIO.Main();
 
         static void Main(string[] args)
         {
