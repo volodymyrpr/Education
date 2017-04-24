@@ -200,5 +200,10 @@ namespace Education.OtherXmlTechnologies
                 w.WriteEndElement();
             }
         }
+
+        public void Execute(string[] args)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

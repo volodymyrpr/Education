@@ -486,6 +486,11 @@ namespace Education.LinqToXml
 
             return files.Concat(folders);
         }
+
+        public void Execute(string[] args)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     class CustomData { internal string Message; }

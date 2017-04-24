@@ -9,5 +9,7 @@ namespace Education
     interface IExecutable
     {
         void Execute();
+
+        void Execute(string[] args);
     }
 }

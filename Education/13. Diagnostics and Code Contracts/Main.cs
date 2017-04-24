@@ -225,6 +225,11 @@ namespace Education._13._Diagnostics_and_Code_Contracts
                 Console.WriteLine(pc.NextValue());
             }
         }
+
+        public void Execute(string[] args)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     class Test

@@ -9,14 +9,22 @@ namespace Education
         static void Main(string[] args)
         {
             Program p = new Program();
-            p.DoEverything();
+
+            p.DoEverything(args);
 
             Console.ReadLine();
         }
 
-        private void DoEverything()
+        private void DoEverything(string[] args)
         {
-            currentClass.Execute();
+            if (args.Length > 0 && args[0] != null && args[0] != "")
+            {
+                currentClass.Execute(args);
+            }
+            else
+            {
+                currentClass.Execute();
+            }
         }
     }
 }

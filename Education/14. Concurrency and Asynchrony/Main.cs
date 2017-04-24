@@ -510,5 +510,10 @@ namespace Education._14._Concurrency_and_Asynchrony
             await Task.Delay(3000);
             return "Something happened";
         }
+
+        public void Execute(string[] args)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

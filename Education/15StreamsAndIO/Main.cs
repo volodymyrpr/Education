@@ -11,7 +11,13 @@ namespace Education._15StreamsAndIO
         public void Execute()
         {
             PipeStreamTest pipeTest = new PipeStreamTest();
-            pipeTest.NamedPipeServerStartCool();
+            pipeTest.AnonymousPipeServerStart();
+        }
+
+        public void Execute(string[] args)
+        {
+            PipeStreamTest pipeTest = new PipeStreamTest();
+            pipeTest.AnonymousPipeClientStart(args);
         }
     }
 }

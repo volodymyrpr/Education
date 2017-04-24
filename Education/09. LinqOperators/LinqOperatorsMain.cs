@@ -727,5 +727,10 @@ namespace Education.LinqOperators
             }
             Console.WriteLine();
         }
+
+        public void Execute(string[] args)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -15,6 +15,11 @@ namespace Education._12._Disposal_and_Garbage_Collection
             WeakReference2();
         }
 
+        public void Execute(string[] args)
+        {
+            throw new NotImplementedException();
+        }
+
         private void WeakReference2()
         {
             Widget.ListAllWidgets();

@@ -21,6 +21,11 @@ namespace Education.Linq
             //SomeMoreTraining();
         }
 
+        public void Execute(string[] args)
+        {
+            throw new NotImplementedException();
+        }
+
         //private void SomeMoreTraining()
         //{
         //    var context = new EFContext();

@@ -40,5 +40,10 @@ namespace Education.Linq
             }
             Console.WriteLine();
         }
+
+        public void Execute(string[] args)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

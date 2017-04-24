@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Pipes;
 using System.Linq;
@@ -72,6 +73,51 @@ namespace Education._15StreamsAndIO
 
                 byte[] msg = Encoding.UTF8.GetBytes("Hello right back!");
                 s.Write(msg, 0, msg.Length);
+            }
+        }
+
+        public void AnonymousPipeServerStart()
+        {
+            Console.WriteLine("anonymous server pipe starting...");
+
+            string clientExe = @"C:\Users\Володимир\Desktop\Education.exe";
+
+            using (var tx = new AnonymousPipeServerStream(PipeDirection.Out, HandleInheritability.Inheritable))
+            {
+                using (var rx = new AnonymousPipeServerStream(PipeDirection.In, HandleInheritability.Inheritable))
+                {
+                    string txID = tx.GetClientHandleAsString();
+                    string rxID = rx.GetClientHandleAsString();
+
+                    var startInfo = new ProcessStartInfo(clientExe, txID + " " + rxID);
+                    startInfo.UseShellExecute = false;
+                    Process p = Process.Start(startInfo);
+
+                    tx.DisposeLocalCopyOfClientHandle();
+                    rx.DisposeLocalCopyOfClientHandle();
+
+                    tx.WriteByte(100);
+                    Console.WriteLine("Server received: " + rx.ReadByte());
+
+                    p.WaitForExit();
+                }
+            }
+        }
+
+        public void AnonymousPipeClientStart(string[] args)
+        {
+            Console.WriteLine("anonymous client pipe starting...");
+
+            string rxID = args[0];
+            string txID = args[1];
+
+            using (var rx = new AnonymousPipeClientStream(PipeDirection.In, rxID))
+            {
+                using (var tx = new AnonymousPipeClientStream(PipeDirection.Out, txID))
+                {
+                    Console.WriteLine("Server received: " + rx.ReadByte());
+                    tx.WriteByte(200);
+                }
             }
         }
     }
