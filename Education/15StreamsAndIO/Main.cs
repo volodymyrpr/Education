@@ -10,14 +10,16 @@ namespace Education._15StreamsAndIO
     {
         public void Execute()
         {
-            PipeStreamTest pipeTest = new PipeStreamTest();
-            pipeTest.AnonymousPipeServerStart();
+            //BufferedStreamExample bufferedStream = new BufferedStreamExample();
+            //bufferedStream.DoSomething();
+            
+                       
         }
 
         public void Execute(string[] args)
         {
-            PipeStreamTest pipeTest = new PipeStreamTest();
-            pipeTest.AnonymousPipeClientStart(args);
+            //PipeStreamTest pipeTest = new PipeStreamTest();
+            //pipeTest.AnonymousPipeClientStart(args);
         }
     }
 }
