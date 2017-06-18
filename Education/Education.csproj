@@ -115,6 +115,7 @@
     <Compile Include="15StreamsAndIO\Main.cs" />
     <Compile Include="15StreamsAndIO\MemoryStreamTest.cs" />
     <Compile Include="15StreamsAndIO\PipeStreamTest.cs" />
+    <Compile Include="15StreamsAndIO\StreamAdapters.cs" />
     <Compile Include="Classes\Animal.cs" />
     <Compile Include="Classes\AnimalCollection.cs" />
     <Compile Include="Classes\Area.cs" />

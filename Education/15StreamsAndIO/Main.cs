@@ -10,10 +10,8 @@ namespace Education._15StreamsAndIO
     {
         public void Execute()
         {
-            //BufferedStreamExample bufferedStream = new BufferedStreamExample();
-            //bufferedStream.DoSomething();
-            
-                       
+            StreamAdapters adaptersTest = new StreamAdapters();
+            adaptersTest.CharacterEncodingExample();
         }
 
         public void Execute(string[] args)
