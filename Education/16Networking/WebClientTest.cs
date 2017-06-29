@@ -11,7 +11,7 @@ namespace Education._16Networking
     {
         public void DoSmth()
         {
-            WebClient();
+            WebClientAsync();
         }
 
         private void UriTest()
@@ -33,6 +33,19 @@ namespace Education._16Networking
         {
             WebClient wc = new WebClient() { Proxy = null };
             wc.DownloadFile("http://www.albahari.com/nutshell/code.aspx", "code.htm");
+            System.Diagnostics.Process.Start("code.htm");
+        }
+
+        private async void WebClientAsync()
+        {
+            WebClient wc = new WebClient() { Proxy = null };
+
+            wc.DownloadProgressChanged += (sender, args) =>
+                Console.WriteLine(args.ProgressPercentage + "% complete");
+
+            Task.Delay(50).ContinueWith(ant => wc.CancelAsync());
+
+            await wc.DownloadFileTaskAsync(new Uri("http://www.oreilly.com"), "code.htm");
             System.Diagnostics.Process.Start("code.htm");
         }
     }
