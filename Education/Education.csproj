@@ -116,6 +116,7 @@
     <Compile Include="15StreamsAndIO\MemoryStreamTest.cs" />
     <Compile Include="15StreamsAndIO\PipeStreamTest.cs" />
     <Compile Include="15StreamsAndIO\StreamAdapters.cs" />
+    <Compile Include="16Networking\AuthenticationTest.cs" />
     <Compile Include="16Networking\HttpClient.cs" />
     <Compile Include="16Networking\Main.cs" />
     <Compile Include="16Networking\WebClientTest.cs" />
