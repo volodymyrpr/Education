@@ -25,6 +25,7 @@ namespace Education
             {
                 currentClass.Execute();
             }
+            //something changed
         }
     }
 }
