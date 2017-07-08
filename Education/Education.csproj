@@ -118,9 +118,11 @@
     <Compile Include="15StreamsAndIO\StreamAdapters.cs" />
     <Compile Include="16Networking\AuthenticationTest.cs" />
     <Compile Include="16Networking\HttpClient.cs" />
+    <Compile Include="16Networking\HttpServerTest.cs" />
     <Compile Include="16Networking\Main.cs" />
     <Compile Include="16Networking\WebClientTest.cs" />
     <Compile Include="16Networking\WebRequestResponse.cs" />
+    <Compile Include="16Networking\WorkingWithHttp.cs" />
     <Compile Include="Classes\Animal.cs" />
     <Compile Include="Classes\AnimalCollection.cs" />
     <Compile Include="Classes\Area.cs" />

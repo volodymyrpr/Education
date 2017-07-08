@@ -10,7 +10,7 @@ namespace Education._16Networking
     {
         public void Execute()
         {
-            AuthenticationTest test = new AuthenticationTest();
+            HttpServerTest test = new HttpServerTest();
             test.DoSmth();
         }
 
