@@ -12,9 +12,36 @@ namespace Education._16Networking
     {
         public void DoSmth()
         {
+            WebServerTest();
+        }
+
+        private void HttpListenerTest()
+        {
             ListenAsync();
             WebClient wc = new WebClient();
             Console.WriteLine(wc.DownloadString("http://localhost:51111/MyApp/Request.txt"));
+        }
+
+        private void WebServerTest()
+        {
+            var server = new TestWebServer("http://localhost:51111/MyApp/", @"E:\Programming\TestFiles\");
+            try
+            {
+                server.Start();
+                Console.WriteLine("Server running... press Enter to stop");
+                WebServerRequestTest();
+                Console.ReadLine();
+            }
+            finally
+            {
+                server.Stop();
+            }
+        }
+
+        private void WebServerRequestTest()
+        {
+            WebClient wc = new WebClient();
+            Console.WriteLine(wc.DownloadString("http://localhost:51111/MyApp/TestDocument.txt"));
         }
 
         async static void ListenAsync()
@@ -54,16 +81,58 @@ namespace Education._16Networking
         public async void Start()
         {
             _listener.Start();
-            while(true)
+            while (true)
             {
                 try
                 {
-                    var content = await _listener.GetContextAsync();
-                    Task.Run(() => Process)
+                    var context = await _listener.GetContextAsync();
+                    Task.Run(() => ProcessRequestAsync(context));
+                }
+                catch (HttpListenerException)
+                {
+                    break;
+                }
+                catch (InvalidOperationException)
+                {
+                    break;
                 }
             }
         }
 
-        
+        public void Stop()
+        {
+            _listener.Stop();
+        }
+
+        private async void ProcessRequestAsync(HttpListenerContext context)
+        {
+            try
+            {
+                string filename = Path.GetFileName(context.Request.RawUrl);
+                string path = Path.Combine(_baseFolder, filename);
+                byte[] msg;
+
+                if (!File.Exists(path))
+                {
+                    Console.WriteLine("Resource not found: " + path);
+                    context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+                    msg = Encoding.UTF8.GetBytes("Sorry, that path doesn't exist");
+                }
+                else
+                {
+                    context.Response.StatusCode = (int)HttpStatusCode.OK;
+                    msg = File.ReadAllBytes(path);
+                }
+                context.Response.ContentLength64 = msg.Length;
+                using (Stream s = context.Response.OutputStream)
+                {
+                    await s.WriteAsync(msg, 0, msg.Length);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Request error " + ex);
+            }
+        }
     }
 }
