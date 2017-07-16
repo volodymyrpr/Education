@@ -10,7 +10,7 @@ namespace Education._16Networking
     {
         public void Execute()
         {
-            HttpServerTest test = new HttpServerTest();
+            UsingFtp test = new UsingFtp();
             test.DoSmth();
         }
 
