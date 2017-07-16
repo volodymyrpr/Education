@@ -120,6 +120,7 @@
     <Compile Include="16Networking\HttpClient.cs" />
     <Compile Include="16Networking\HttpServerTest.cs" />
     <Compile Include="16Networking\Main.cs" />
+    <Compile Include="16Networking\UsingDNS.cs" />
     <Compile Include="16Networking\UsingFtp.cs" />
     <Compile Include="16Networking\WebClientTest.cs" />
     <Compile Include="16Networking\WebRequestResponse.cs" />

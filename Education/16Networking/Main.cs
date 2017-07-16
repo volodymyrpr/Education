@@ -10,7 +10,7 @@ namespace Education._16Networking
     {
         public void Execute()
         {
-            UsingFtp test = new UsingFtp();
+            UsingDNS test = new UsingDNS();
             test.DoSmth();
         }
 
