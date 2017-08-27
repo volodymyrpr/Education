@@ -127,6 +127,8 @@
     <Compile Include="16Networking\WebClientTest.cs" />
     <Compile Include="16Networking\WebRequestResponse.cs" />
     <Compile Include="16Networking\WorkingWithHttp.cs" />
+    <Compile Include="17Serialization\ISerializableTest.cs" />
+    <Compile Include="17Serialization\Main.cs" />
     <Compile Include="Classes\Animal.cs" />
     <Compile Include="Classes\AnimalCollection.cs" />
     <Compile Include="Classes\Area.cs" />

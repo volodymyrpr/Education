@@ -4,7 +4,7 @@ namespace Education
 {
     class Program
     {
-        private IExecutable currentClass = new _16Networking.Main();
+        private IExecutable currentClass = new _17Serialization.Main();
 
         static void Main(string[] args)
         {
